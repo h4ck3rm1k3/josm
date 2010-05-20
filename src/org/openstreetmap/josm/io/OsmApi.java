@@ -49,7 +49,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  */
 public class OsmApi extends OsmConnection {
-    @SuppressWarnings("unused")
+    //    @SuppressWarnings("unused")
     static private final Logger logger = Logger.getLogger(OsmApi.class.getName());
     /** max number of retries to send a request in case of HTTP 500 errors or timeouts */
     static public final int DEFAULT_MAX_NUM_RETRIES = 5;
@@ -150,7 +150,7 @@ public class OsmApi extends OsmConnection {
 		    }
 
 
-            for (int i=0; i< atts.getLength(); i++) {
+            for (i=0; i< atts.getLength(); i++) {
                 capabilities.put(qName, atts.getQName(i), atts.getValue(i));
             }
         }

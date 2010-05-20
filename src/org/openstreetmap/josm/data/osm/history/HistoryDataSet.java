@@ -55,7 +55,13 @@ public class HistoryDataSet implements LayerChangeListener{
     }
 
     public void removeHistoryDataSetListener(HistoryDataSetListener listener) {
-        listeners.remove(listener);
+	if (listeners.size() > 0)
+	    {
+		if (listeners.contains(listener))
+		    {
+			listeners.remove(listener);
+		    }
+	    }
     }
 
     protected void fireHistoryUpdated(PrimitiveId id) {

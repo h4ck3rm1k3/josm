@@ -119,8 +119,9 @@ Build-Date: ${build.tstamp}
 	<target name="compile" depends="init">
 		<javac srcdir="src" classpathref="classpath" destdir="build" compiler="gcj" 
 				target="1.5" source="1.5" debug="on" encoding="UTF-8">
-			<compilerarg value="-Xlint:deprecation"/>
-			<compilerarg value="-Xlint:unchecked"/>
+			<compilerarg value="--verbose"/>
+			<compilerarg value="-save-temps"/>
+
 		</javac>
 	</target>
 
