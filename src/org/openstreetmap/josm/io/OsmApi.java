@@ -149,13 +149,13 @@ public class OsmApi extends OsmConnection {
 	                System.err.println("error getting naem");
 		    }
 
-
-            for (i=0; i< atts.getLength(); i++) {
-                capabilities.put(qName, atts.getQName(i), atts.getValue(i));
+	    }
+            for (int j=0; j< atts.getLength(); j++) {
+                capabilities.put(qName, atts.getQName(j), atts.getValue(j));
             }
-        }
-    }
 
+	}
+    }
     /**
      * creates an OSM api for a specific server URL
      *

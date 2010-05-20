@@ -1,5 +1,8 @@
 all : dist/josm
 
+clean :
+	rm dist/josm-custom.jar
+
 dist/josm-custom.jar :
 	ant
 
