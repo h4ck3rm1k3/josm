@@ -429,7 +429,7 @@ public class DuplicateNode extends Test {
         // never merge nodes with different tags.
         if (testError.getCode() == DUPLICATE_NODE) return false;
         // never merge nodes from two different non-closed geometries
-        if (testError.getCode() == DUPLICATE_NODE_UNCLOSED) return false;
+	//        if (testError.getCode() == DUPLICATE_NODE_UNCLOSED) return false;
         // everything else is ok to merge
         return true;
     }

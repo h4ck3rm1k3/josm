@@ -93,7 +93,7 @@ public class OsmValidator implements LayerChangeListener {
         WronglyOrderedWays.class, // ID 1001 .. 1099
         UnclosedWays.class, // ID 1101 .. 1199
         TagChecker.class, // ID 1201 .. 1299
-        UnconnectedWays.class, // ID 1301 .. 1399
+	//        UnconnectedWays.class, // ID 1301 .. 1399
         DuplicateWay.class, // ID 1401 .. 1499
         NameMismatch.class, // ID  1501 ..  1599
         MultipolygonTest.class, // ID  1601 ..  1699
@@ -103,7 +103,7 @@ public class OsmValidator implements LayerChangeListener {
         BuildingInBuilding.class, // ID 2001 .. 2099
         DeprecatedTags.class, // ID 2101 .. 2199
         OverlappingAreas.class, // ID 2201 .. 2299
-        WayConnectedToArea.class, // ID 2301 .. 2399
+	//        WayConnectedToArea.class, // ID 2301 .. 2399
         NodesDuplicatingWayTags.class, // ID 2401 .. 2499
         PowerLines.class, // ID 2501 .. 2599
     };
