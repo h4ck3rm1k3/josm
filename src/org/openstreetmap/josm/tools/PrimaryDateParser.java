@@ -8,6 +8,7 @@ import java.util.TimeZone;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import org.openstreetmap.josm.tools.FallbackDateParser;
 
 /**
  * Handles a number of different date formats encountered in OSM. This is built
@@ -32,7 +33,7 @@ public class PrimaryDateParser {
         } catch (DatatypeConfigurationException e) {
             throw new RuntimeException("Unable to instantiate xml datatype factory.", e);
         }
-
+        
         fallbackDateParser = new FallbackDateParser();
 
         calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));

@@ -97,18 +97,18 @@ public class Puwg extends UTM implements Projection,ProjectionSubPrefs {
         return decFormatter.format(p.north());
     }
 
-    @Override
-    public void setupPreferencePanel(JPanel p) {
-        JComboBox prefcb = new JComboBox(Puwg.Zones);
+    // @Override
+    // public void setupPreferencePanel(JPanel p) {
+    //     JComboBox prefcb = new JComboBox(Puwg.Zones);
 
-        prefcb.setSelectedIndex(zone);
-        p.setLayout(new GridBagLayout());
-        p.add(new JLabel(tr("PUWG Zone")), GBC.std().insets(5,5,0,5));
-        p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
-        /* Note: we use component position 2 below to find this again */
-        p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
-        p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
-    }
+    //     prefcb.setSelectedIndex(zone);
+    //     p.setLayout(new GridBagLayout());
+    //     p.add(new JLabel(tr("PUWG Zone")), GBC.std().insets(5,5,0,5));
+    //     p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
+    //     /* Note: we use component position 2 below to find this again */
+    //     p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
+    //     p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
+    // }
 
     @Override
     public Collection<String> getPreferences(JPanel p) {

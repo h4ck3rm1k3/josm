@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.tools.ColorHelper;
 
 /**

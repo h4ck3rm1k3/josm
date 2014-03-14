@@ -5,5 +5,5 @@ public interface NameFormatter {
     String format(Node node);
     String format(Way way);
     String format(Relation relation);
-    String format(Changeset changeset);
+    //String format(Changeset changeset);
 }

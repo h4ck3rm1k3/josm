@@ -2,7 +2,7 @@
 
 package org.openstreetmap.josm.gui.layer;
 
-import static org.openstreetmap.josm.gui.help.HelpUtil.ht;
+//import static org.openstreetmap.josm.gui.help.HelpUtil.ht;
 import static org.openstreetmap.josm.tools.I18n.marktr;
 import static org.openstreetmap.josm.tools.I18n.tr;
 import static org.openstreetmap.josm.tools.I18n.trn;
@@ -37,43 +37,43 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.actions.RenameLayerAction;
-import org.openstreetmap.josm.command.PurgePrimitivesCommand;
+//import org.openstreetmap.josm.Main;
+// import org.openstreetmap.josm.actions.RenameLayerAction;
+// import org.openstreetmap.josm.command.PurgePrimitivesCommand;
 import org.openstreetmap.josm.data.Bounds;
-import org.openstreetmap.josm.data.SelectionChangedListener;
-import org.openstreetmap.josm.data.conflict.Conflict;
-import org.openstreetmap.josm.data.conflict.ConflictCollection;
+//import org.openstreetmap.josm.data.SelectionChangedListener;
+// import org.openstreetmap.josm.data.conflict.Conflict;
+// import org.openstreetmap.josm.data.conflict.ConflictCollection;
 import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.coor.LatLon;
-import org.openstreetmap.josm.data.gpx.GpxData;
-import org.openstreetmap.josm.data.gpx.ImmutableGpxTrack;
-import org.openstreetmap.josm.data.gpx.WayPoint;
+// import org.openstreetmap.josm.data.gpx.GpxData;
+// import org.openstreetmap.josm.data.gpx.ImmutableGpxTrack;
+// import org.openstreetmap.josm.data.gpx.WayPoint;
 import org.openstreetmap.josm.data.osm.DataSet;
-import org.openstreetmap.josm.data.osm.DataSetMerger;
+//import org.openstreetmap.josm.data.osm.DataSetMerger;
 import org.openstreetmap.josm.data.osm.DataSource;
-import org.openstreetmap.josm.data.osm.DatasetCollection;
-import org.openstreetmap.josm.data.osm.DatasetConsistencyTest;
+//import org.openstreetmap.josm.data.osm.DatasetCollection;
+//import org.openstreetmap.josm.data.osm.DatasetConsistencyTest;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.OsmPrimitive;
 import org.openstreetmap.josm.data.osm.Relation;
 import org.openstreetmap.josm.data.osm.Way;
-import org.openstreetmap.josm.data.osm.event.AbstractDatasetChangedEvent;
-import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter;
-import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter.Listener;
-import org.openstreetmap.josm.data.osm.visitor.AbstractVisitor;
-import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
-import org.openstreetmap.josm.data.osm.visitor.paint.MapPaintVisitor;
-import org.openstreetmap.josm.data.osm.visitor.paint.PaintVisitor;
-import org.openstreetmap.josm.data.osm.visitor.paint.SimplePaintVisitor;
-import org.openstreetmap.josm.gui.HelpAwareOptionPane;
-import org.openstreetmap.josm.gui.MapView;
-import org.openstreetmap.josm.gui.HelpAwareOptionPane.ButtonSpec;
-import org.openstreetmap.josm.gui.dialogs.LayerListDialog;
-import org.openstreetmap.josm.gui.dialogs.LayerListPopup;
+//import org.openstreetmap.josm.data.osm.event.AbstractDatasetChangedEvent;
+//import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter;
+//import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter.Listener;
+// import org.openstreetmap.josm.data.osm.visitor.AbstractVisitor;
+// import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
+// import org.openstreetmap.josm.data.osm.visitor.paint.MapPaintVisitor;
+// import org.openstreetmap.josm.data.osm.visitor.paint.PaintVisitor;
+// import org.openstreetmap.josm.data.osm.visitor.paint.SimplePaintVisitor;
+// import org.openstreetmap.josm.gui.HelpAwareOptionPane;
+// import org.openstreetmap.josm.gui.MapView;
+// import org.openstreetmap.josm.gui.HelpAwareOptionPane.ButtonSpec;
+// import org.openstreetmap.josm.gui.dialogs.LayerListDialog;
+// import org.openstreetmap.josm.gui.dialogs.LayerListPopup;
 import org.openstreetmap.josm.tools.DateUtils;
 import org.openstreetmap.josm.tools.GBC;
-import org.openstreetmap.josm.tools.ImageProvider;
+//import org.openstreetmap.josm.tools.ImageProvider;
 
 /**
  * A layer holding data from a specific dataset.
@@ -81,7 +81,9 @@ import org.openstreetmap.josm.tools.ImageProvider;
  *
  * @author imi
  */
-public class OsmDataLayer extends Layer implements Listener, SelectionChangedListener {
+public class OsmDataLayer extends Layer 
+                                  //implements Listener, SelectionChangedListener 
+{
     static public final String REQUIRES_SAVE_TO_DISK_PROP = OsmDataLayer.class.getName() + ".requiresSaveToDisk";
     static public final String REQUIRES_UPLOAD_TO_SERVER_PROP = OsmDataLayer.class.getName() + ".requiresUploadToServer";
 
@@ -119,7 +121,8 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
         return tr("Data Layer {0}", dataLayerCounter);
     }
 
-    public final static class DataCountVisitor extends AbstractVisitor {
+    public final static class DataCountVisitor // extends AbstractVisitor 
+    {
         public int nodes;
         public int ways;
         public int relations;
@@ -161,14 +164,14 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
     /**
      * the collection of conflicts detected in this layer
      */
-    private ConflictCollection conflicts;
+    //private ConflictCollection conflicts;
 
     /**
      * @deprecated Use {@link DataSet#addDataSetListener(org.openstreetmap.josm.data.osm.event.DataSetListener)} instead
      * @see DataSetListener, DatasetEventManager
      */
-    @Deprecated
-    public final LinkedList<DataChangeListener> listenerDataChanged = new LinkedList<DataChangeListener>();
+    // @Deprecated
+    // public final LinkedList<DataChangeListener> listenerDataChanged = new LinkedList<DataChangeListener>();
 
     /**
      * a paint texture for non-downloaded area
@@ -220,70 +223,70 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
      * are drawn by the edit layer).
      * Draw nodes last to overlap the ways they belong to.
      */
-    @Override public void paint(final Graphics2D g, final MapView mv, Bounds box) {
-        isChanged = false;
-        highlightUpdateCount = data.getHighlightUpdateCount();
+    // @Override public void paint(final Graphics2D g, final MapView mv, Bounds box) {
+    //     isChanged = false;
+    //     highlightUpdateCount = data.getHighlightUpdateCount();
 
-        boolean active = mv.getActiveLayer() == this;
-        boolean inactive = !active && Main.pref.getBoolean("draw.data.inactive_color", true);
-        boolean virtual = !inactive && mv.isVirtualNodesEnabled();
+    //     boolean active = mv.getActiveLayer() == this;
+    //     boolean inactive = !active && Main.pref.getBoolean("draw.data.inactive_color", true);
+    //     boolean virtual = !inactive && mv.isVirtualNodesEnabled();
 
-        // draw the hatched area for non-downloaded region. only draw if we're the active
-        // and bounds are defined; don't draw for inactive layers or loaded GPX files etc
-        if (active && Main.pref.getBoolean("draw.data.downloaded_area", true) && !data.dataSources.isEmpty()) {
-            // initialize area with current viewport
-            Rectangle b = mv.getBounds();
-            // on some platforms viewport bounds seem to be offset from the left,
-            // over-grow it just to be sure
-            b.grow(100, 100);
-            Area a = new Area(b);
+    //     // draw the hatched area for non-downloaded region. only draw if we're the active
+    //     // and bounds are defined; don't draw for inactive layers or loaded GPX files etc
+    //     if (active && Main.pref.getBoolean("draw.data.downloaded_area", true) && !data.dataSources.isEmpty()) {
+    //         // initialize area with current viewport
+    //         Rectangle b = mv.getBounds();
+    //         // on some platforms viewport bounds seem to be offset from the left,
+    //         // over-grow it just to be sure
+    //         b.grow(100, 100);
+    //         Area a = new Area(b);
 
-            // now succesively subtract downloaded areas
-            for (DataSource src : data.dataSources) {
-                if (src.bounds != null && !src.bounds.getMin().equals(src.bounds.getMax())) {
-                    EastNorth en1 = mv.getProjection().latlon2eastNorth(src.bounds.getMin());
-                    EastNorth en2 = mv.getProjection().latlon2eastNorth(src.bounds.getMax());
-                    Point p1 = mv.getPoint(en1);
-                    Point p2 = mv.getPoint(en2);
-                    Rectangle r = new Rectangle(Math.min(p1.x, p2.x),Math.min(p1.y, p2.y),Math.abs(p2.x-p1.x),Math.abs(p2.y-p1.y));
-                    a.subtract(new Area(r));
-                }
-            }
+    //         // now succesively subtract downloaded areas
+    //         for (DataSource src : data.dataSources) {
+    //             if (src.bounds != null && !src.bounds.getMin().equals(src.bounds.getMax())) {
+    //                 EastNorth en1 = mv.getProjection().latlon2eastNorth(src.bounds.getMin());
+    //                 EastNorth en2 = mv.getProjection().latlon2eastNorth(src.bounds.getMax());
+    //                 Point p1 = mv.getPoint(en1);
+    //                 Point p2 = mv.getPoint(en2);
+    //                 Rectangle r = new Rectangle(Math.min(p1.x, p2.x),Math.min(p1.y, p2.y),Math.abs(p2.x-p1.x),Math.abs(p2.y-p1.y));
+    //                 a.subtract(new Area(r));
+    //             }
+    //         }
 
-            // paint remainder
-            g.setPaint(hatched);
-            g.fill(a);
-        }
+    //         // paint remainder
+    //         g.setPaint(hatched);
+    //         g.fill(a);
+    //     }
 
-        PaintVisitor painter;
-        if (Main.pref.getBoolean("draw.wireframe")) {
-            painter = new SimplePaintVisitor();
-        } else {
-            painter = new MapPaintVisitor();
-        }
-        painter.setGraphics(g);
-        painter.setNavigatableComponent(mv);
-        painter.setInactive(inactive);
-        painter.visitAll(data, virtual, box);
-        Main.map.conflictDialog.paintConflicts(g, mv);
-    }
+    //     PaintVisitor painter;
+    //     if (Main.pref.getBoolean("draw.wireframe")) {
+    //         painter = new SimplePaintVisitor();
+    //     } else {
+    //         painter = new MapPaintVisitor();
+    //     }
+    //     painter.setGraphics(g);
+    //     painter.setNavigatableComponent(mv);
+    //     painter.setInactive(inactive);
+    //     painter.visitAll(data, virtual, box);
+    //     Main.map.conflictDialog.paintConflicts(g, mv);
+    // }
 
-    @Override public String getToolTipText() {
-        int nodes = new DatasetCollection<OsmPrimitive>(data.getNodes(), OsmPrimitive.nonDeletedPredicate).size();
-        int ways = new DatasetCollection<OsmPrimitive>(data.getWays(), OsmPrimitive.nonDeletedPredicate).size();
+    // @Override public String getToolTipText() {
+    //     int nodes = new DatasetCollection<OsmPrimitive>(data.getNodes(), OsmPrimitive.nonDeletedPredicate).size();
+    //     int ways = new DatasetCollection<OsmPrimitive>(data.getWays(), OsmPrimitive.nonDeletedPredicate).size();
 
-        String tool = trn("{0} node", "{0} nodes", nodes, nodes)+", ";
-        tool += trn("{0} way", "{0} ways", ways, ways);
+    //     String tool = trn("{0} node", "{0} nodes", nodes, nodes)+", ";
+    //     tool += trn("{0} way", "{0} ways", ways, ways);
 
-        if (data.getVersion() != null) {
-            tool += ", " + tr("version {0}", data.getVersion());
-        }
-        File f = getAssociatedFile();
-        if (f != null) {
-            tool = "<html>"+tool+"<br>"+f.getPath()+"</html>";
-        }
-        return tool;
-    }
+    //     if (data.getVersion() != null) {
+    //         tool += ", " + tr("version {0}", data.getVersion());
+    //     }
+    //     File f = getAssociatedFile();
+    //     if (f != null) {
+    //         tool = "<html>"+tool+"<br>"+f.getPath()+"</html>";
+    //     }
+    //     return tool;
+    // }
 
     @Override public void mergeFrom(final Layer from) {
         mergeFrom(((OsmDataLayer)from).data);
@@ -411,53 +414,53 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
      * @return the purge command. <code>null</code> if no primitives have to
      * be purged
      */
-    protected PurgePrimitivesCommand buildPurgeCommand() {
-        ArrayList<OsmPrimitive> toPurge = new ArrayList<OsmPrimitive>();
-        conflictLoop:
-            for (Conflict<?> c: conflicts) {
-                if (c.getMy().isDeleted() && !c.getTheir().isVisible()) {
-                    // Local and server version of the primitive are deleted. We
-                    // can purge it from the local dataset.
-                    //
-                    toPurge.add(c.getMy());
-                } else if (!c.getMy().isModified() && ! c.getTheir().isVisible()) {
-                    // We purge deleted *ways* and *relations* automatically if they are
-                    // deleted on the server and if they aren't modified in the local
-                    // dataset.
-                    //
-                    if (c.getMy() instanceof Way || c.getMy() instanceof Relation) {
-                        toPurge.add(c.getMy());
-                        continue conflictLoop;
-                    }
-                    // We only purge nodes if they aren't part of a modified way.
-                    // Otherwise the number of nodes of a modified way could drop
-                    // below 2 and we would lose the modified data when the way
-                    // gets purged.
-                    //
-                    for (OsmPrimitive parent: c.getMy().getReferrers()) {
-                        if (parent.isModified() && parent instanceof Way) {
-                            continue conflictLoop;
-                        }
-                    }
-                    toPurge.add(c.getMy());
-                }
-            }
-        if (toPurge.isEmpty()) return null;
-        PurgePrimitivesCommand cmd = new PurgePrimitivesCommand(this, toPurge);
-        return cmd;
-    }
+    // protected PurgePrimitivesCommand buildPurgeCommand() {
+    //     ArrayList<OsmPrimitive> toPurge = new ArrayList<OsmPrimitive>();
+    //     conflictLoop:
+    //         for (Conflict<?> c: conflicts) {
+    //             if (c.getMy().isDeleted() && !c.getTheir().isVisible()) {
+    //                 // Local and server version of the primitive are deleted. We
+    //                 // can purge it from the local dataset.
+    //                 //
+    //                 toPurge.add(c.getMy());
+    //             } else if (!c.getMy().isModified() && ! c.getTheir().isVisible()) {
+    //                 // We purge deleted *ways* and *relations* automatically if they are
+    //                 // deleted on the server and if they aren't modified in the local
+    //                 // dataset.
+    //                 //
+    //                 if (c.getMy() instanceof Way || c.getMy() instanceof Relation) {
+    //                     toPurge.add(c.getMy());
+    //                     continue conflictLoop;
+    //                 }
+    //                 // We only purge nodes if they aren't part of a modified way.
+    //                 // Otherwise the number of nodes of a modified way could drop
+    //                 // below 2 and we would lose the modified data when the way
+    //                 // gets purged.
+    //                 //
+    //                 for (OsmPrimitive parent: c.getMy().getReferrers()) {
+    //                     if (parent.isModified() && parent instanceof Way) {
+    //                         continue conflictLoop;
+    //                     }
+    //                 }
+    //                 toPurge.add(c.getMy());
+    //             }
+    //         }
+    //     if (toPurge.isEmpty()) return null;
+    //     PurgePrimitivesCommand cmd = new PurgePrimitivesCommand(this, toPurge);
+    //     return cmd;
+    // }
 
-    @Override public boolean isMergable(final Layer other) {
-        return other instanceof OsmDataLayer;
-    }
+    // @Override public boolean isMergable(final Layer other) {
+    //     return other instanceof OsmDataLayer;
+    // }
 
-    @Override public void visitBoundingBox(final BoundingXYVisitor v) {
-        for (final Node n: data.getNodes()) {
-            if (n.isUsable()) {
-                v.visit(n);
-            }
-        }
-    }
+    // @Override public void visitBoundingBox(final BoundingXYVisitor v) {
+    //     for (final Node n: data.getNodes()) {
+    //         if (n.isUsable()) {
+    //             v.visit(n);
+    //         }
+    //     }
+    // }
 
     /**
      * Clean out the data behind the layer. This means clearing the redo/undo lists,
@@ -553,77 +556,77 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
         }
     }
 
-    public static GpxData toGpxData(DataSet data, File file) {
-        GpxData gpxData = new GpxData();
-        gpxData.storageFile = file;
-        HashSet<Node> doneNodes = new HashSet<Node>();
-        for (Way w : data.getWays()) {
-            if (!w.isUsable()) {
-                continue;
-            }
-            Collection<Collection<WayPoint>> trk = new ArrayList<Collection<WayPoint>>();
-            Map<String, Object> trkAttr = new HashMap<String, Object>();
+    // public static GpxData toGpxData(DataSet data, File file) {
+    //     GpxData gpxData = new GpxData();
+    //     gpxData.storageFile = file;
+    //     HashSet<Node> doneNodes = new HashSet<Node>();
+    //     for (Way w : data.getWays()) {
+    //         if (!w.isUsable()) {
+    //             continue;
+    //         }
+    //         Collection<Collection<WayPoint>> trk = new ArrayList<Collection<WayPoint>>();
+    //         Map<String, Object> trkAttr = new HashMap<String, Object>();
 
-            if (w.get("name") != null) {
-                trkAttr.put("name", w.get("name"));
-            }
+    //         if (w.get("name") != null) {
+    //             trkAttr.put("name", w.get("name"));
+    //         }
 
-            ArrayList<WayPoint> trkseg = null;
-            for (Node n : w.getNodes()) {
-                if (!n.isUsable()) {
-                    trkseg = null;
-                    continue;
-                }
-                if (trkseg == null) {
-                    trkseg = new ArrayList<WayPoint>();
-                    trk.add(trkseg);
-                }
-                if (!n.isTagged()) {
-                    doneNodes.add(n);
-                }
-                WayPoint wpt = new WayPoint(n.getCoor());
-                if (!n.isTimestampEmpty()) {
-                    wpt.attr.put("time", DateUtils.fromDate(n.getTimestamp()));
-                    wpt.setTime();
-                }
-                trkseg.add(wpt);
-            }
+    //         ArrayList<WayPoint> trkseg = null;
+    //         for (Node n : w.getNodes()) {
+    //             if (!n.isUsable()) {
+    //                 trkseg = null;
+    //                 continue;
+    //             }
+    //             if (trkseg == null) {
+    //                 trkseg = new ArrayList<WayPoint>();
+    //                 trk.add(trkseg);
+    //             }
+    //             if (!n.isTagged()) {
+    //                 doneNodes.add(n);
+    //             }
+    //             WayPoint wpt = new WayPoint(n.getCoor());
+    //             if (!n.isTimestampEmpty()) {
+    //                 wpt.attr.put("time", DateUtils.fromDate(n.getTimestamp()));
+    //                 wpt.setTime();
+    //             }
+    //             trkseg.add(wpt);
+    //         }
 
-            gpxData.tracks.add(new ImmutableGpxTrack(trk, trkAttr));
-        }
+    //         gpxData.tracks.add(new ImmutableGpxTrack(trk, trkAttr));
+    //     }
 
-        // what is this loop meant to do? it creates waypoints but never
-        // records them?
-        for (Node n : data.getNodes()) {
-            if (n.isIncomplete() || n.isDeleted() || doneNodes.contains(n)) {
-                continue;
-            }
-            WayPoint wpt = new WayPoint(n.getCoor());
-            if (!n.isTimestampEmpty()) {
-                wpt.attr.put("time", DateUtils.fromDate(n.getTimestamp()));
-                wpt.setTime();
-            }
-            String name = n.get("name");
-            if (name != null) {
-                wpt.attr.put("name", name);
-            }
-        }
-        return gpxData;
-    }
+    //     // what is this loop meant to do? it creates waypoints but never
+    //     // records them?
+    //     for (Node n : data.getNodes()) {
+    //         if (n.isIncomplete() || n.isDeleted() || doneNodes.contains(n)) {
+    //             continue;
+    //         }
+    //         WayPoint wpt = new WayPoint(n.getCoor());
+    //         if (!n.isTimestampEmpty()) {
+    //             wpt.attr.put("time", DateUtils.fromDate(n.getTimestamp()));
+    //             wpt.setTime();
+    //         }
+    //         String name = n.get("name");
+    //         if (name != null) {
+    //             wpt.attr.put("name", name);
+    //         }
+    //     }
+    //     return gpxData;
+    // }
 
-    public GpxData toGpxData() {
-        return toGpxData(data, getAssociatedFile());
-    }
+    // public GpxData toGpxData() {
+    //     return toGpxData(data, getAssociatedFile());
+    // }
 
-    public class ConvertToGpxLayerAction extends AbstractAction {
-        public ConvertToGpxLayerAction() {
-            super(tr("Convert to GPX layer"), ImageProvider.get("converttogpx"));
-        }
-        public void actionPerformed(ActionEvent e) {
-            Main.main.addLayer(new GpxLayer(toGpxData(), tr("Converted from: {0}", getName())));
-            Main.main.removeLayer(OsmDataLayer.this);
-        }
-    }
+    // public class ConvertToGpxLayerAction extends AbstractAction {
+    //     public ConvertToGpxLayerAction() {
+    //         super(tr("Convert to GPX layer"), ImageProvider.get("converttogpx"));
+    //     }
+    //     public void actionPerformed(ActionEvent e) {
+    //         Main.main.addLayer(new GpxLayer(toGpxData(), tr("Converted from: {0}", getName())));
+    //         Main.main.removeLayer(OsmDataLayer.this);
+    //     }
+    // }
 
     public boolean containsPoint(LatLon coor) {
         // we'll assume that if this has no data sources
@@ -646,9 +649,9 @@ public class OsmDataLayer extends Layer implements Listener, SelectionChangedLis
      *
      * @return the set of conflicts currently managed in this layer
      */
-    public ConflictCollection getConflicts() {
-        return conflicts;
-    }
+    // public ConflictCollection getConflicts() {
+    //     return conflicts;
+    // }
 
     /**
      * Replies true if the data managed by this layer needs to be uploaded to

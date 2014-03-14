@@ -10,7 +10,7 @@ public interface ProjectionSubPrefs {
      * Generates the GUI for the given preference and packs them in a JPanel
      * so they may be displayed if the projection is selected.
      */
-    public void setupPreferencePanel(JPanel p);
+    //public void setupPreferencePanel(JPanel p);
 
     /**
      * Will be called if the preference dialog is dismissed.

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.osm.visitor.Visitor;
 import org.openstreetmap.josm.tools.CopyList;
 
@@ -48,7 +48,7 @@ public final class Relation extends OsmPrimitive {
             rm.getMember().addReferrer(this);
         }
 
-        fireMembersChanged();
+        //fireMembersChanged();
     }
 
     /**
@@ -77,7 +77,7 @@ public final class Relation extends OsmPrimitive {
     public void addMember(RelationMember member) {
         members.add(member);
         member.getMember().addReferrer(this);
-        fireMembersChanged();
+        //fireMembersChanged();
     }
 
     /**
@@ -89,7 +89,7 @@ public final class Relation extends OsmPrimitive {
     public void addMember(int index, RelationMember member) {
         members.add(index, member);
         member.getMember().addReferrer(this);
-        fireMembersChanged();
+        //fireMembersChanged();
     }
 
     /**
@@ -104,7 +104,7 @@ public final class Relation extends OsmPrimitive {
         if (result.getMember() != member.getMember()) {
             member.getMember().addReferrer(this);
             result.getMember().removeReferrer(this);
-            fireMembersChanged();
+            //fireMembersChanged();
         }
         return result;
     }
@@ -123,15 +123,15 @@ public final class Relation extends OsmPrimitive {
                 return result;
         }
         result.getMember().removeReferrer(this);
-        fireMembersChanged();
+        //fireMembersChanged();
         return result;
     }
 
     @Override public void visit(Visitor visitor) {
-        visitor.visit(this);
+    visitor.visit(this);
     }
 
-    protected Relation(long id, boolean allowNegative) {
+    public Relation(long id, boolean allowNegative) {
         super(id, allowNegative);
     }
 
@@ -183,28 +183,28 @@ public final class Relation extends OsmPrimitive {
         setMembers(((Relation)osm).getMembers());
     }
 
-    @Override public void load(PrimitiveData data) {
-        super.load(data);
+    // @Override public void load(PrimitiveData data) {
+    //     super.load(data);
 
-        RelationData relationData = (RelationData) data;
+    //     RelationData relationData = (RelationData) data;
 
-        List<RelationMember> newMembers = new ArrayList<RelationMember>();
-        for (RelationMemberData member : relationData.getMembers()) {
-            OsmPrimitive primitive = getDataSet().getPrimitiveById(member);
-            if (primitive == null)
-                throw new AssertionError("Data consistency problem - relation with missing member detected");
-            newMembers.add(new RelationMember(member.getRole(), primitive));
-        }
-        setMembers(newMembers);
-    }
+    //     List<RelationMember> newMembers = new ArrayList<RelationMember>();
+    //     for (RelationMemberData member : relationData.getMembers()) {
+    //         OsmPrimitive primitive = getDataSet().getPrimitiveById(member);
+    //         if (primitive == null)
+    //             throw new AssertionError("Data consistency problem - relation with missing member detected");
+    //         newMembers.add(new RelationMember(member.getRole(), primitive));
+    //     }
+    //     setMembers(newMembers);
+    // }
 
     @Override public RelationData save() {
-        RelationData data = new RelationData();
-        saveCommonAttributes(data);
-        for (RelationMember member:getMembers()) {
-            data.getMembers().add(new RelationMemberData(member.getRole(), member.getMember()));
-        }
-        return data;
+         RelationData data = new RelationData();
+         saveCommonAttributes(data);
+         for (RelationMember member:getMembers()) {
+             data.getMembers().add(new RelationMemberData(member.getRole(), member.getMember()));
+         }
+         return data;
     }
 
     @Override public String toString() {
@@ -268,7 +268,7 @@ public final class Relation extends OsmPrimitive {
         }
         primitive.removeReferrer(this);
         members.removeAll(todelete);
-        fireMembersChanged();
+        //fireMembersChanged();
     }
 
     @Override
@@ -302,7 +302,7 @@ public final class Relation extends OsmPrimitive {
         for (OsmPrimitive primitive:primitives) {
             primitive.removeReferrer(this);
         }
-        fireMembersChanged();
+        //fireMembersChanged();
     }
 
     @Override
@@ -335,17 +335,17 @@ public final class Relation extends OsmPrimitive {
     public BBox getBBox() {
         if (members.isEmpty())
             return new BBox(0, 0, 0, 0);
-        if (getDataSet() == null)
+        //        if (getDataSet() == null)
             return calculateBBox(new HashSet<PrimitiveId>());
-        else {
-            if (bbox == null) {
-                bbox = calculateBBox(new HashSet<PrimitiveId>());
-            }
-            if (bbox == null)
-                return new BBox(0, 0, 0, 0); // No real members
-            else
-                return new BBox(bbox);
-        }
+        // else {
+        //     if (bbox == null) {
+        //         bbox = calculateBBox(new HashSet<PrimitiveId>());
+        //     }
+        //     if (bbox == null)
+        //         return new BBox(0, 0, 0, 0); // No real members
+        //     else
+        //         return new BBox(bbox);
+        // }
     }
 
     private BBox calculateBBox(Set<PrimitiveId> visitedRelations) {
@@ -375,35 +375,35 @@ public final class Relation extends OsmPrimitive {
         bbox = calculateBBox(new HashSet<PrimitiveId>());
     }
 
-    @Override
-    public void setDataset(DataSet dataSet) {
-        super.setDataset(dataSet);
-        checkMembers();
-        bbox = null; // bbox might have changed if relation was in ds, was removed, modified, added back to dataset
-    }
+    // @Override
+    // public void setDataset(DataSet dataSet) {
+    //     super.setDataset(dataSet);
+    //     checkMembers();
+    //     bbox = null; // bbox might have changed if relation was in ds, was removed, modified, added back to dataset
+    // }
 
-    private void checkMembers() {
-        DataSet dataSet = getDataSet();
-        if (dataSet != null) {
-            for (RelationMember rm: members) {
-                if (rm.getMember().getDataSet() != dataSet)
-                    throw new DataIntegrityProblemException(String.format("Relation member must be part of the same dataset as relation(%s, %s)", getPrimitiveId(), rm.getMember().getPrimitiveId()));
-            }
-            if (Main.pref.getBoolean("debug.checkDeleteReferenced", true)) {
-                for (RelationMember rm: members) {
-                    if (rm.getMember().isDeleted())
-                        throw new DataIntegrityProblemException("Deleted member referenced: " + toString());
-                }
-            }
-        }
-    }
+    // private void checkMembers() {
+    //     DataSet dataSet = getDataSet();
+    //     if (dataSet != null) {
+    //         for (RelationMember rm: members) {
+    //             if (rm.getMember().getDataSet() != dataSet)
+    //                 throw new DataIntegrityProblemException(String.format("Relation member must be part of the same dataset as relation(%s, %s)", getPrimitiveId(), rm.getMember().getPrimitiveId()));
+    //         }
+    //         if (Main.pref.getBoolean("debug.checkDeleteReferenced", true)) {
+    //             for (RelationMember rm: members) {
+    //                 if (rm.getMember().isDeleted())
+    //                     throw new DataIntegrityProblemException("Deleted member referenced: " + toString());
+    //             }
+    //         }
+    //     }
+    // }
 
-    private void fireMembersChanged() {
-        checkMembers();
-        if (getDataSet() != null) {
-            getDataSet().fireRelationMembersChanged(this);
-        }
-    }
+    // private void fireMembersChanged() {
+    //     checkMembers();
+    //     if (getDataSet() != null) {
+    //         getDataSet().fireRelationMembersChanged(this);
+    //     }
+    // }
 
     /**
      * Replies true if at least one child primitive is incomplete

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 
 /**
  * Use this class if you want to cache and store a single file that gets updated regularly.

@@ -8,14 +8,14 @@ import java.util.Collection;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.SelectionChangedListener;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.OsmPrimitive;
 import org.openstreetmap.josm.data.osm.PrimitiveDeepCopy;
-import org.openstreetmap.josm.gui.MapView;
-import org.openstreetmap.josm.gui.layer.Layer;
-import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+//import org.openstreetmap.josm.gui.MapView;
+//import org.openstreetmap.josm.gui.layer.Layer;
+//import org.openstreetmap.josm.gui.layer.OsmDataLayer;
 import org.openstreetmap.josm.tools.Destroyable;
 import org.openstreetmap.josm.tools.ImageProvider;
 import org.openstreetmap.josm.tools.Shortcut;
@@ -38,7 +38,7 @@ import org.openstreetmap.josm.tools.Shortcut;
 abstract public class JosmAction extends AbstractAction implements Destroyable {
 
     protected Shortcut sc;
-    private LayerChangeAdapter layerChangeAdapter;
+    //private LayerChangeAdapter layerChangeAdapter;
     private SelectionChangeAdapter selectionChangeAdapter;
 
     public Shortcut getShortcut() {
@@ -123,9 +123,9 @@ abstract public class JosmAction extends AbstractAction implements Destroyable {
      *
      * @return the current edit layer. null, if no edit layer exists
      */
-    protected OsmDataLayer getEditLayer() {
-        return Main.main.getEditLayer();
-    }
+    // protected OsmDataLayer getEditLayer() {
+    //     return Main.main.getEditLayer();
+    // }
 
     /**
      * Replies the current dataset
@@ -190,19 +190,19 @@ abstract public class JosmAction extends AbstractAction implements Destroyable {
      * Adapter for layer change events
      *
      */
-    private class LayerChangeAdapter implements MapView.LayerChangeListener {
-        public void activeLayerChange(Layer oldLayer, Layer newLayer) {
-            updateEnabledState();
-        }
+    // private class LayerChangeAdapter implements MapView.LayerChangeListener {
+    //     public void activeLayerChange(Layer oldLayer, Layer newLayer) {
+    //         updateEnabledState();
+    //     }
 
-        public void layerAdded(Layer newLayer) {
-            updateEnabledState();
-        }
+    //     public void layerAdded(Layer newLayer) {
+    //         updateEnabledState();
+    //     }
 
-        public void layerRemoved(Layer oldLayer) {
-            updateEnabledState();
-        }
-    }
+    //     public void layerRemoved(Layer oldLayer) {
+    //         updateEnabledState();
+    //     }
+    // }
 
     /**
      * Adapter for selection change events

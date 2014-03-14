@@ -1,7 +1,7 @@
 // License: GPL. Copyright 2007 by Immanuel Scholz and others
 package org.openstreetmap.josm.data.osm;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.coor.CachedLatLon;
 import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.coor.LatLon;
@@ -19,7 +19,7 @@ public final class Node extends OsmPrimitive {
     public final void setCoor(LatLon coor) {
         if(coor != null){
             if (getDataSet() != null) {
-                getDataSet().fireNodeMoved(this, coor);
+                //getDataSet().fireNodeMoved(this, coor);
             } else {
                 setCoorInternal(coor);
             }
@@ -30,20 +30,20 @@ public final class Node extends OsmPrimitive {
         return coor;
     }
 
-    public final void setEastNorth(EastNorth eastNorth) {
-        if(eastNorth != null) {
-            setCoor(Main.proj.eastNorth2latlon(eastNorth));
-        }
-    }
+    // public final void setEastNorth(EastNorth eastNorth) {
+    //     if(eastNorth != null) {
+    //         setCoor(Main.proj.eastNorth2latlon(eastNorth));
+    //     }
+    // }
 
-    public final EastNorth getEastNorth() {
-        return coor != null ? coor.getEastNorth() : null;
-    }
+    // public final EastNorth getEastNorth() {
+    //     return coor != null ? coor.getEastNorth() : null;
+    // }
 
     /**
      * To be used only by Dataset.reindexNode
      */
-    protected void setCoorInternal(LatLon coor) {
+    public void setCoorInternal(LatLon coor) {
         if(this.coor == null) {
             this.coor = new CachedLatLon(coor);
         } else {
@@ -51,7 +51,7 @@ public final class Node extends OsmPrimitive {
         }
     }
 
-    protected Node(long id, boolean allowNegative) {
+    public Node(long id, boolean allowNegative) {
         super(id, allowNegative);
     }
 
@@ -104,13 +104,13 @@ public final class Node extends OsmPrimitive {
         setCoor(latlon);
     }
 
-    public Node(EastNorth eastNorth) {
-        super(0, false);
-        setEastNorth(eastNorth);
-    }
+    // public Node(EastNorth eastNorth) {
+    //     super(0, false);
+    //     //setEastNorth(eastNorth);
+    // }
 
     @Override public void visit(Visitor visitor) {
-        visitor.visit(this);
+         visitor.visit(this);
     }
 
     @Override public void cloneFrom(OsmPrimitive osm) {
@@ -129,13 +129,13 @@ public final class Node extends OsmPrimitive {
      * @throws DataIntegrityProblemException thrown if either this is new and other is not, or other is new and this is not
      * @throws DataIntegrityProblemException thrown if other is new and other.getId() != this.getId()
      */
-    @Override
-    public void mergeFrom(OsmPrimitive other) {
-        super.mergeFrom(other);
-        if (!other.isIncomplete()) {
-            setCoor(new LatLon(((Node)other).coor));
-        }
-    }
+    // @Override
+    // public void mergeFrom(OsmPrimitive other) {
+    //     super.mergeFrom(other);
+    //     if (!other.isIncomplete()) {
+    //         setCoor(new LatLon(((Node)other).coor));
+    //     }
+    // }
 
     @Override public void load(PrimitiveData data) {
         super.load(data);

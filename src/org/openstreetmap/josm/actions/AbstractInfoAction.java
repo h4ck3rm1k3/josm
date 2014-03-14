@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.osm.OsmPrimitive;
-import org.openstreetmap.josm.gui.HelpAwareOptionPane;
-import org.openstreetmap.josm.gui.HelpAwareOptionPane.ButtonSpec;
-import org.openstreetmap.josm.gui.help.HelpUtil;
+//import org.openstreetmap.josm.gui.HelpAwareOptionPane;
+//import org.openstreetmap.josm.gui.HelpAwareOptionPane.ButtonSpec;
+//import org.openstreetmap.josm.gui.help.HelpUtil;
 import org.openstreetmap.josm.tools.ImageProvider;
 import org.openstreetmap.josm.tools.OpenBrowser;
 import org.openstreetmap.josm.tools.Shortcut;

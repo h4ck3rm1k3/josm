@@ -8,11 +8,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.data.osm.visitor.Visitor;
+//import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.data.osm.WayData;
 import org.openstreetmap.josm.tools.CopyList;
 import org.openstreetmap.josm.tools.Pair;
-
+import org.openstreetmap.josm.data.osm.visitor.Visitor;
 /**
  * One full way, consisting of a list of way nodes.
  *
@@ -60,7 +60,7 @@ public final class Way extends OsmPrimitive {
         }
 
         clearCached();
-        fireNodesChanged();
+        //fireNodesChanged();
     }
 
     /**
@@ -134,10 +134,10 @@ public final class Way extends OsmPrimitive {
     }
 
     @Override public void visit(Visitor visitor) {
-        visitor.visit(this);
+         visitor.visit(this);
     }
 
-    protected Way(long id, boolean allowNegative) {
+    public Way(long id, boolean allowNegative) {
         super(id, allowNegative);
     }
 
@@ -296,7 +296,7 @@ public final class Way extends OsmPrimitive {
         System.arraycopy(nodes, 0, newNodes, 0, nodes.length);
         newNodes[nodes.length] = n;
         nodes = newNodes;
-        fireNodesChanged();
+        //fireNodesChanged();
     }
 
     /**
@@ -319,7 +319,7 @@ public final class Way extends OsmPrimitive {
         System.arraycopy(nodes, offs, newNodes, offs + 1, nodes.length - offs);
         newNodes[offs] = n;
         nodes = newNodes;
-        fireNodesChanged();
+        //fireNodesChanged();
     }
 
     @Override
@@ -331,7 +331,7 @@ public final class Way extends OsmPrimitive {
                 n.addReferrer(this);
             }
         }
-        fireNodesChanged();
+        //fireNodesChanged();
         super.setDeleted(deleted);
     }
 
@@ -371,27 +371,27 @@ public final class Way extends OsmPrimitive {
                 if (n.getDataSet() != dataSet)
                     throw new DataIntegrityProblemException("Nodes in way must be in the same dataset");
             }
-            if (Main.pref.getBoolean("debug.checkDeleteReferenced", true)) {
-                for (Node n: nodes) {
-                    if (n.isDeleted())
-                        throw new DataIntegrityProblemException("Deleted node referenced: " + toString());
-                }
-            }
+            // if (Main.pref.getBoolean("debug.checkDeleteReferenced", true)) {
+            //     for (Node n: nodes) {
+            //         if (n.isDeleted())
+            //             throw new DataIntegrityProblemException("Deleted node referenced: " + toString());
+            //     }
+            // }
         }
     }
 
-    private void fireNodesChanged() {
-        checkNodes();
-        if (getDataSet() != null) {
-            getDataSet().fireWayNodesChanged(this);
-        }
-    }
+    // private void fireNodesChanged() {
+    //     checkNodes();
+    //     if (getDataSet() != null) {
+    //         //getDataSet().fireWayNodesChanged(this);
+    //     }
+    // }
 
-    @Override
-    public void setDataset(DataSet dataSet) {
-        super.setDataset(dataSet);
-        checkNodes();
-    }
+    // @Override
+    // public void setDataset(DataSet dataSet) {
+    //     super.setDataset(dataSet);
+    //     checkNodes();
+    // }
 
     @Override
     public BBox getBBox() {

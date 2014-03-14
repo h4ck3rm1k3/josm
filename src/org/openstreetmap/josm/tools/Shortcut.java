@@ -14,7 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 
 /**
  * Global shortcut class.

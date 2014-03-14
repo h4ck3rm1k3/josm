@@ -24,7 +24,7 @@ public interface Projection {
         new SwissGrid(),
         new UTM(),
         new UTM_France_DOM(),
-        new LambertCC9Zones()    // Still needs proper default zoom
+        //new LambertCC9Zones()    // Still needs proper default zoom
     };
 
     /**

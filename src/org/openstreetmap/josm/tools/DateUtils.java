@@ -30,7 +30,7 @@ import java.util.TimeZone;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 // HACK! 
-import org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl;
+//import org.apache.xerces.jaxp.datatype.XMLGregorianCalendarImpl;
 
 /**
  * A static utility class dealing with parsing XML date quickly and formatting
@@ -112,17 +112,19 @@ public final class DateUtils {
 
         try {
 
-            return new XMLGregorianCalendarImpl(str).toGregorianCalendar().getTime();
+            //return new XMLGregorianCalendarImpl(str).toGregorianCalendar().getTime();
         } catch (Exception ex) {
             return new Date();
         }
+        return null;
     }
 
     public static synchronized String fromDate(Date date) {
-        calendar.setTime(date);
-        XMLGregorianCalendar xgc = new XMLGregorianCalendarImpl(calendar);
-        if (calendar.get(Calendar.MILLISECOND) == 0) xgc.setFractionalSecond(null);
-        return xgc.toXMLFormat();
+        //calendar.setTime(date);
+        //XMLGregorianCalendar xgc = new XMLGregorianCalendarImpl(calendar);
+        //if (calendar.get(Calendar.MILLISECOND) == 0) xgc.setFractionalSecond(null);
+        //return xgc.toXMLFormat();
+        return "TODO";
     }
 
     private static boolean checkLayout(String text, String pattern) {

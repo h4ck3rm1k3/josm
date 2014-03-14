@@ -37,7 +37,7 @@ public final class Changeset implements Tagged {
      */
     private boolean incomplete;
     /** the changeset content */
-    private ChangesetDataSet content = null;
+    //private ChangesetDataSet content = null;
 
     /**
      * Creates a new changeset with id 0.
@@ -285,11 +285,11 @@ public final class Changeset implements Tagged {
         return content != null;
     }
 
-    public ChangesetDataSet getContent() {
-        return content;
-    }
+    //public ChangesetDataSet getContent() {
+    //        return content;
+    //    }
 
-    public void setContent(ChangesetDataSet content) {
-        this.content = content;
-    }
+    // public void setContent(ChangesetDataSet content) {
+    //     this.content = content;
+    // }
 }

@@ -1,7 +1,7 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.data.osm.visitor;
 
-import org.openstreetmap.josm.data.osm.Changeset;
+//import org.openstreetmap.josm.data.osm.Changeset;
 
 /**
  * This class serves as a base class for most simple visitors,
@@ -12,7 +12,7 @@ import org.openstreetmap.josm.data.osm.Changeset;
  */
 public abstract class AbstractVisitor implements Visitor {
 
-    public void visit(Changeset cs) {
-        // do nothing
-    }
+    // public void visit(Changeset cs) {
+    //     // do nothing
+    // }
 }

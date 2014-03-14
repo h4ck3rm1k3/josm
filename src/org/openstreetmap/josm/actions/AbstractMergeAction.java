@@ -16,9 +16,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.gui.ExtendedDialog;
-import org.openstreetmap.josm.gui.layer.Layer;
+//import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.gui.ExtendedDialog;
+//import org.openstreetmap.josm.gui.layer.Layer;
 import org.openstreetmap.josm.tools.GBC;
 import org.openstreetmap.josm.tools.Shortcut;
 
@@ -51,33 +51,33 @@ public abstract class AbstractMergeAction extends JosmAction {
         super(name, iconName, tooltip, shortcut, register);
     }
 
-    protected Layer askTargetLayer(List<Layer> targetLayers) {
-        JComboBox layerList = new JComboBox();
-        layerList.setRenderer(new LayerListCellRenderer());
-        layerList.setModel(new DefaultComboBoxModel(targetLayers.toArray()));
-        layerList.setSelectedIndex(0);
+    // protected Layer askTargetLayer(List<Layer> targetLayers) {
+    //     JComboBox layerList = new JComboBox();
+    //     layerList.setRenderer(new LayerListCellRenderer());
+    //     layerList.setModel(new DefaultComboBoxModel(targetLayers.toArray()));
+    //     layerList.setSelectedIndex(0);
 
-        JPanel pnl = new JPanel();
-        pnl.setLayout(new GridBagLayout());
-        pnl.add(new JLabel(tr("Please select the target layer.")), GBC.eol());
-        pnl.add(layerList, GBC.eol());
+    //     JPanel pnl = new JPanel();
+    //     pnl.setLayout(new GridBagLayout());
+    //     pnl.add(new JLabel(tr("Please select the target layer.")), GBC.eol());
+    //     pnl.add(layerList, GBC.eol());
 
-        ExtendedDialog ed = new ExtendedDialog(Main.parent,
-                tr("Select target layer"),
-                new String[] { tr("Merge"), tr("Cancel") });
-        ed.setButtonIcons(new String[] { "dialogs/mergedown", "cancel" });
-        ed.setContent(pnl);
-        ed.showDialog();
-        if (ed.getValue() != 1)
-            return null;
+    //     ExtendedDialog ed = new ExtendedDialog(Main.parent,
+    //             tr("Select target layer"),
+    //             new String[] { tr("Merge"), tr("Cancel") });
+    //     ed.setButtonIcons(new String[] { "dialogs/mergedown", "cancel" });
+    //     ed.setContent(pnl);
+    //     ed.showDialog();
+    //     if (ed.getValue() != 1)
+    //         return null;
 
-        Layer targetLayer = (Layer) layerList.getSelectedItem();
-        return targetLayer;
-    }
+    //     Layer targetLayer = (Layer) layerList.getSelectedItem();
+    //     return targetLayer;
+    // }
 
-    protected void warnNoTargetLayersForSourceLayer(Layer sourceLayer) {
-        JOptionPane.showMessageDialog(Main.parent,
-                tr("<html>There are no layers the source layer<br>''{0}''<br>could be merged to.</html>"),
-                tr("No target layers"), JOptionPane.WARNING_MESSAGE);
-    }
+    // protected void warnNoTargetLayersForSourceLayer(Layer sourceLayer) {
+    //     JOptionPane.showMessageDialog(Main.parent,
+    //             tr("<html>There are no layers the source layer<br>''{0}''<br>could be merged to.</html>"),
+    //             tr("No target layers"), JOptionPane.WARNING_MESSAGE);
+    // }
 }

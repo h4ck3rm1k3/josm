@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.openstreetmap.josm.data.coor.CoordinateFormat;
-import org.openstreetmap.josm.data.osm.Changeset;
+//import org.openstreetmap.josm.data.osm.Changeset;
 import org.openstreetmap.josm.data.osm.DataSet;
-import org.openstreetmap.josm.data.osm.DataSource;
+//import org.openstreetmap.josm.data.osm.DataSource;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.OsmPrimitive;
 import org.openstreetmap.josm.data.osm.OsmPrimitiveType;
@@ -37,7 +37,7 @@ public class OsmWriter extends XmlWriter implements Visitor {
     private boolean osmConform;
     private boolean withBody = true;
     private String version;
-    private Changeset changeset;
+    //private Changeset changeset;
 
     public OsmWriter(PrintWriter out, boolean osmConform, String version) {
         super(out);
@@ -48,9 +48,9 @@ public class OsmWriter extends XmlWriter implements Visitor {
     public void setWithBody(boolean wb) {
         this.withBody = wb;
     }
-    public void setChangeset(Changeset cs) {
-        this.changeset = cs;
-    }
+    // public void setChangeset(Changeset cs) {
+    //     this.changeset = cs;
+    // }
     public void setVersion(String v) {
         this.version = v;
     }
@@ -101,14 +101,14 @@ public class OsmWriter extends XmlWriter implements Visitor {
     }
 
     public void writeDataSources(DataSet ds) {
-        for (DataSource s : ds.dataSources) {
-            out.println("  <bounds minlat='"
-                    + s.bounds.getMin().lat()+"' minlon='"
-                    + s.bounds.getMin().lon()+"' maxlat='"
-                    + s.bounds.getMax().lat()+"' maxlon='"
-                    + s.bounds.getMax().lon()
-                    +"' origin='"+XmlWriter.encode(s.origin)+"' />");
-        }
+        // for (DataSource s : ds.dataSources) {
+        //     out.println("  <bounds minlat='"
+        //             + s.bounds.getMin().lat()+"' minlon='"
+        //             + s.bounds.getMin().lon()+"' maxlat='"
+        //             + s.bounds.getMax().lat()+"' maxlon='"
+        //             + s.bounds.getMax().lon()
+        //             +"' origin='"+XmlWriter.encode(s.origin)+"' />");
+        // }
     }
 
     public void visit(Node n) {
@@ -153,31 +153,31 @@ public class OsmWriter extends XmlWriter implements Visitor {
         }
     }
 
-    public void visit(Changeset cs) {
-        out.print("  <changeset ");
-        out.print(" id='"+cs.getId()+"'");
-        if (cs.getUser() != null) {
-            out.print(" user='"+cs.getUser().getName() +"'");
-            out.print(" uid='"+cs.getUser().getId() +"'");
-        }
-        if (cs.getCreatedAt() != null) {
-            out.print(" created_at='"+DateUtils.fromDate(cs.getCreatedAt()) +"'");
-        }
-        if (cs.getClosedAt() != null) {
-            out.print(" closed_at='"+DateUtils.fromDate(cs.getClosedAt()) +"'");
-        }
-        out.print(" open='"+ (cs.isOpen() ? "true" : "false") +"'");
-        if (cs.getMin() != null) {
-            out.print(" min_lon='"+ cs.getMin().lonToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
-            out.print(" min_lat='"+ cs.getMin().latToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
-        }
-        if (cs.getMax() != null) {
-            out.print(" max_lon='"+ cs.getMin().lonToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
-            out.print(" max_lat='"+ cs.getMin().latToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
-        }
-        out.println(">");
-        addTags(cs, "changeset", false); // also writes closing </changeset>
-    }
+    // public void visit(Changeset cs) {
+    //     out.print("  <changeset ");
+    //     out.print(" id='"+cs.getId()+"'");
+    //     if (cs.getUser() != null) {
+    //         out.print(" user='"+cs.getUser().getName() +"'");
+    //         out.print(" uid='"+cs.getUser().getId() +"'");
+    //     }
+    //     if (cs.getCreatedAt() != null) {
+    //         out.print(" created_at='"+DateUtils.fromDate(cs.getCreatedAt()) +"'");
+    //     }
+    //     if (cs.getClosedAt() != null) {
+    //         out.print(" closed_at='"+DateUtils.fromDate(cs.getClosedAt()) +"'");
+    //     }
+    //     out.print(" open='"+ (cs.isOpen() ? "true" : "false") +"'");
+    //     if (cs.getMin() != null) {
+    //         out.print(" min_lon='"+ cs.getMin().lonToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
+    //         out.print(" min_lat='"+ cs.getMin().latToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
+    //     }
+    //     if (cs.getMax() != null) {
+    //         out.print(" max_lon='"+ cs.getMin().lonToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
+    //         out.print(" max_lat='"+ cs.getMin().latToString(CoordinateFormat.DECIMAL_DEGREES) +"'");
+    //     }
+    //     out.println(">");
+    //     addTags(cs, "changeset", false); // also writes closing </changeset>
+    // }
 
     private static final Comparator<Entry<String, String>> byKeyComparator = new Comparator<Entry<String,String>>() {
         public int compare(Entry<String, String> o1, Entry<String, String> o2) {
@@ -192,12 +192,12 @@ public class OsmWriter extends XmlWriter implements Visitor {
             }
             List<Entry<String, String>> entries = new ArrayList<Entry<String,String>>(osm.getKeys().entrySet());
             Collections.sort(entries, byKeyComparator);
-            for (Entry<String, String> e : entries) {
-                if ((osm instanceof Changeset) || !("created_by".equals(e.getKey()))) {
-                    out.println("    <tag k='"+ XmlWriter.encode(e.getKey()) +
-                            "' v='"+XmlWriter.encode(e.getValue())+ "' />");
-                }
-            }
+            // for (Entry<String, String> e : entries) {
+            //     if ((osm instanceof Changeset) || !("created_by".equals(e.getKey()))) {
+            //         out.println("    <tag k='"+ XmlWriter.encode(e.getKey()) +
+            //                 "' v='"+XmlWriter.encode(e.getValue())+ "' />");
+            //     }
+            // }
             out.println("  </" + tagname + ">");
         } else if (tagOpen) {
             out.println(" />");
@@ -244,11 +244,11 @@ public class OsmWriter extends XmlWriter implements Visitor {
         if (osm.getVersion() != 0) {
             out.print(" version='"+osm.getVersion()+"'");
         }
-        if (this.changeset != null && this.changeset.getId() != 0) {
-            out.print(" changeset='"+this.changeset.getId()+"'" );
-        } else if (osm.getChangesetId() > 0 && !osm.isNew()) {
-            out.print(" changeset='"+osm.getChangesetId()+"'" );
-        }
+        // if (this.changeset != null && this.changeset.getId() != 0) {
+        //     out.print(" changeset='"+this.changeset.getId()+"'" );
+        // } else if (osm.getChangesetId() > 0 && !osm.isNew()) {
+        //     out.print(" changeset='"+osm.getChangesetId()+"'" );
+        // }
     }
 
     public void close() {

@@ -414,16 +414,16 @@ public class UTM_France_DOM implements Projection, ProjectionSubPrefs {
         return currentGeodesic;
     }
 
-    public void setupPreferencePanel(JPanel p) {
-        JComboBox prefcb = new JComboBox(utmGeodesicsNames);
+    // public void setupPreferencePanel(JPanel p) {
+    //     JComboBox prefcb = new JComboBox(utmGeodesicsNames);
 
-        prefcb.setSelectedIndex(currentGeodesic);
-        p.setLayout(new GridBagLayout());
-        p.add(new JLabel(tr("UTM20 North Geodesic system")), GBC.std().insets(5,5,0,5));
-        p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
-        p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
-        p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
-    }
+    //     prefcb.setSelectedIndex(currentGeodesic);
+    //     p.setLayout(new GridBagLayout());
+    //     p.add(new JLabel(tr("UTM20 North Geodesic system")), GBC.std().insets(5,5,0,5));
+    //     p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
+    //     p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
+    //     p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
+    // }
 
     public Collection<String> getPreferences(JPanel p) {
         Object prefcb = p.getComponent(2);

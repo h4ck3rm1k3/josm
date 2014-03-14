@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.coor.LatLon;
@@ -92,21 +92,21 @@ public class Lambert implements Projection, ProjectionSubPrefs {
     }
 
     public Lambert() {
-        if (ntf_rgf93Grid == null) {
-            try {
-                String gridFileName = "ntf_r93_b.gsb";
-                InputStream is = Main.class.getResourceAsStream("/data/"+gridFileName);
-                if (is == null) {
-                    System.err.println(tr("Warning: failed to open input stream for resource ''/data/{0}''. Cannot load NTF<->RGF93 grid", gridFileName));
-                    return;
-                }
-                ntf_rgf93Grid = new NTV2GridShiftFile();
-                ntf_rgf93Grid.loadGridShiftFile(is, false);
-                //System.out.println("NTF<->RGF93 grid loaded.");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        // if (ntf_rgf93Grid == null) {
+        //     try {
+        //         String gridFileName = "ntf_r93_b.gsb";
+        //         InputStream is = Main.class.getResourceAsStream("/data/"+gridFileName);
+        //         if (is == null) {
+        //             System.err.println(tr("Warning: failed to open input stream for resource ''/data/{0}''. Cannot load NTF<->RGF93 grid", gridFileName));
+        //             return;
+        //         }
+        //         ntf_rgf93Grid = new NTV2GridShiftFile();
+        //         ntf_rgf93Grid.loadGridShiftFile(is, false);
+        //         //System.out.println("NTF<->RGF93 grid loaded.");
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //     }
+        // }
     }
 
     /**
@@ -252,17 +252,17 @@ public class Lambert implements Projection, ProjectionSubPrefs {
         tr("{0} (Corsica)", 4)
     };
 
-    public void setupPreferencePanel(JPanel p) {
-        JComboBox prefcb = new JComboBox(lambert4zones);
+    // public void setupPreferencePanel(JPanel p) {
+    //     JComboBox prefcb = new JComboBox(lambert4zones);
 
-        prefcb.setSelectedIndex(layoutZone);
-        p.setLayout(new GridBagLayout());
-        p.add(new JLabel(tr("Lambert CC Zone")), GBC.std().insets(5,5,0,5));
-        p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
-        /* Note: we use component position 2 below to find this again */
-        p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
-        p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
-    }
+    //     prefcb.setSelectedIndex(layoutZone);
+    //     p.setLayout(new GridBagLayout());
+    //     p.add(new JLabel(tr("Lambert CC Zone")), GBC.std().insets(5,5,0,5));
+    //     p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
+    //     /* Note: we use component position 2 below to find this again */
+    //     p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
+    //     p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
+    // }
 
     public Collection<String> getPreferences(JPanel p) {
         Object prefcb = p.getComponent(2);

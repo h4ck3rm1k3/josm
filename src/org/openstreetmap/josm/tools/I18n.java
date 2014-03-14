@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 
 /**
  * Internationalisation support.
@@ -114,19 +114,19 @@ public class I18n {
      */
     public static final Locale[] getAvailableTranslations() {
         Vector<Locale> v = new Vector<Locale>();
-        if(Main.class.getResource("/data/en.lang") != null)
-        {
-            for (String loc : languages.keySet()) {
-                if(Main.class.getResource("/data/"+loc+".lang") != null) {
-                    int i = loc.indexOf('_');
-                    if (i > 0) {
-                        v.add(new Locale(loc.substring(0, i), loc.substring(i + 1)));
-                    } else {
-                        v.add(new Locale(loc));
-                    }
-                }
-            }
-        }
+        // if(Main.class.getResource("/data/en.lang") != null)
+        // {
+        //     for (String loc : languages.keySet()) {
+        //         if(Main.class.getResource("/data/"+loc+".lang") != null) {
+        //             int i = loc.indexOf('_');
+        //             if (i > 0) {
+        //                 v.add(new Locale(loc.substring(0, i), loc.substring(i + 1)));
+        //             } else {
+        //                 v.add(new Locale(loc));
+        //             }
+        //         }
+        //     }
+        // }
         v.add(Locale.ENGLISH);
         Locale[] l = new Locale[v.size()];
         l = v.toArray(l);
@@ -184,146 +184,147 @@ public class I18n {
             pluralMode = PluralMode.MODE_NOTONE;
             return true;
         }
-        URL en = Main.class.getResource("/data/en.lang");
-        if(en == null)
-            return false;
-        URL tr = Main.class.getResource("/data/"+l+".lang");
-        if(tr == null)
-        {
-            int i = l.indexOf('_');
-            if (i > 0) {
-                l = l.substring(0, i);
-            }
-            tr = Main.class.getResource("/data/"+l+".lang");
-            if(tr == null)
-                return false;
-        }
-
-        HashMap<String, String> s = new HashMap<String, String>();
-        HashMap<String, String[]> p = new HashMap<String, String[]>();
-        /* file format:
-           for all single strings:
-           {
-             unsigned short (2 byte) stringlength
-             string
-           }
-           unsigned short (2 byte) 0xFFFF (marks end of single strings)
-           for all multi strings:
-           {
-             unsigned char (1 byte) stringcount
-             for stringcount
-               unsigned short (2 byte) stringlength
-               string
-           }
-         */
-        try
-        {
-            InputStream ens = new BufferedInputStream(en.openStream());
-            InputStream trs = new BufferedInputStream(tr.openStream());
-            byte[] enlen = new byte[2];
-            byte[] trlen = new byte[2];
-            boolean multimode = false;
-            byte[] str = new byte[4096];
-            for(;;)
-            {
-                if(multimode)
-                {
-                    int ennum = ens.read();
-                    int trnum = trs.read();
-                    if((ennum == -1 && trnum != -1) || (ennum != -1 && trnum == -1)) /* files do not match */
-                        return false;
-                    if(ennum == -1) {
-                        break;
-                    }
-                    String[] enstrings = new String[ennum];
-                    String[] trstrings = new String[trnum];
-                    for(int i = 0; i < ennum; ++i)
-                    {
-                        int val = ens.read(enlen);
-                        if(val != 2) /* file corrupt */
-                            return false;
-                        val = (enlen[0] < 0 ? 256+enlen[0]:enlen[0])*256+(enlen[1] < 0 ? 256+enlen[1]:enlen[1]);
-                        if(val > str.length) {
-                            str = new byte[val];
-                        }
-                        int rval = ens.read(str, 0, val);
-                        if(rval != val) /* file corrupt */
-                            return false;
-                        enstrings[i] = new String(str, 0, val, "utf-8");
-                    }
-                    for(int i = 0; i < trnum; ++i)
-                    {
-                        int val = trs.read(trlen);
-                        if(val != 2) /* file corrupt */
-                            return false;
-                        val = (trlen[0] < 0 ? 256+trlen[0]:trlen[0])*256+(trlen[1] < 0 ? 256+trlen[1]:trlen[1]);
-                        if(val > str.length) {
-                            str = new byte[val];
-                        }
-                        int rval = trs.read(str, 0, val);
-                        if(rval != val) /* file corrupt */
-                            return false;
-                        trstrings[i] = new String(str, 0, val, "utf-8");
-                    }
-                    if(trnum > 0) {
-                        p.put(enstrings[0], trstrings);
-                    }
-                }
-                else
-                {
-                    int enval = ens.read(enlen);
-                    int trval = trs.read(trlen);
-                    if(enval != trval) /* files do not match */
-                        return false;
-                    if(enval == -1) {
-                        break;
-                    }
-                    if(enval != 2) /* files corrupt */
-                        return false;
-                    enval = (enlen[0] < 0 ? 256+enlen[0]:enlen[0])*256+(enlen[1] < 0 ? 256+enlen[1]:enlen[1]);
-                    trval = (trlen[0] < 0 ? 256+trlen[0]:trlen[0])*256+(trlen[1] < 0 ? 256+trlen[1]:trlen[1]);
-                    if(enval == 0xFFFF)
-                    {
-                        multimode = true;
-                        if(trval != 0xFFFF) /* files do not match */
-                            return false;
-                    }
-                    else
-                    {
-                        if(enval > str.length) {
-                            str = new byte[enval];
-                        }
-                        if(trval > str.length) {
-                            str = new byte[trval];
-                        }
-                        int val = ens.read(str, 0, enval);
-                        if(val != enval) /* file corrupt */
-                            return false;
-                        String enstr = new String(str, 0, enval, "utf-8");
-                        if(trval != 0)
-                        {
-                            val = trs.read(str, 0, trval);
-                            if(val != trval) /* file corrupt */
-                                return false;
-                            String trstr = new String(str, 0, trval, "utf-8");
-                            s.put(enstr, trstr);
-                        }
-                    }
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            return false;
-        }
-        if(!s.isEmpty() && languages.containsKey(l))
-        {
-            strings = s;
-            pstrings = p;
-            pluralMode = languages.get(l);
-            return true;
-        }
+        // URL en = Main.class.getResource("/data/en.lang");
+        // if(en == null)
         return false;
+
+        // URL tr = Main.class.getResource("/data/"+l+".lang");
+        // if(tr == null)
+        // {
+        //     int i = l.indexOf('_');
+        //     if (i > 0) {
+        //         l = l.substring(0, i);
+        //     }
+        //     tr = Main.class.getResource("/data/"+l+".lang");
+        //     if(tr == null)
+        //         return false;
+        // }
+
+        // HashMap<String, String> s = new HashMap<String, String>();
+        // HashMap<String, String[]> p = new HashMap<String, String[]>();
+        // /* file format:
+        //    for all single strings:
+        //    {
+        //      unsigned short (2 byte) stringlength
+        //      string
+        //    }
+        //    unsigned short (2 byte) 0xFFFF (marks end of single strings)
+        //    for all multi strings:
+        //    {
+        //      unsigned char (1 byte) stringcount
+        //      for stringcount
+        //        unsigned short (2 byte) stringlength
+        //        string
+        //    }
+        //  */
+        // try
+        // {
+        //     InputStream ens = new BufferedInputStream(en.openStream());
+        //     InputStream trs = new BufferedInputStream(tr.openStream());
+        //     byte[] enlen = new byte[2];
+        //     byte[] trlen = new byte[2];
+        //     boolean multimode = false;
+        //     byte[] str = new byte[4096];
+        //     for(;;)
+        //     {
+        //         if(multimode)
+        //         {
+        //             int ennum = ens.read();
+        //             int trnum = trs.read();
+        //             if((ennum == -1 && trnum != -1) || (ennum != -1 && trnum == -1)) /* files do not match */
+        //                 return false;
+        //             if(ennum == -1) {
+        //                 break;
+        //             }
+        //             String[] enstrings = new String[ennum];
+        //             String[] trstrings = new String[trnum];
+        //             for(int i = 0; i < ennum; ++i)
+        //             {
+        //                 int val = ens.read(enlen);
+        //                 if(val != 2) /* file corrupt */
+        //                     return false;
+        //                 val = (enlen[0] < 0 ? 256+enlen[0]:enlen[0])*256+(enlen[1] < 0 ? 256+enlen[1]:enlen[1]);
+        //                 if(val > str.length) {
+        //                     str = new byte[val];
+        //                 }
+        //                 int rval = ens.read(str, 0, val);
+        //                 if(rval != val) /* file corrupt */
+        //                     return false;
+        //                 enstrings[i] = new String(str, 0, val, "utf-8");
+        //             }
+        //             for(int i = 0; i < trnum; ++i)
+        //             {
+        //                 int val = trs.read(trlen);
+        //                 if(val != 2) /* file corrupt */
+        //                     return false;
+        //                 val = (trlen[0] < 0 ? 256+trlen[0]:trlen[0])*256+(trlen[1] < 0 ? 256+trlen[1]:trlen[1]);
+        //                 if(val > str.length) {
+        //                     str = new byte[val];
+        //                 }
+        //                 int rval = trs.read(str, 0, val);
+        //                 if(rval != val) /* file corrupt */
+        //                     return false;
+        //                 trstrings[i] = new String(str, 0, val, "utf-8");
+        //             }
+        //             if(trnum > 0) {
+        //                 p.put(enstrings[0], trstrings);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             int enval = ens.read(enlen);
+        //             int trval = trs.read(trlen);
+        //             if(enval != trval) /* files do not match */
+        //                 return false;
+        //             if(enval == -1) {
+        //                 break;
+        //             }
+        //             if(enval != 2) /* files corrupt */
+        //                 return false;
+        //             enval = (enlen[0] < 0 ? 256+enlen[0]:enlen[0])*256+(enlen[1] < 0 ? 256+enlen[1]:enlen[1]);
+        //             trval = (trlen[0] < 0 ? 256+trlen[0]:trlen[0])*256+(trlen[1] < 0 ? 256+trlen[1]:trlen[1]);
+        //             if(enval == 0xFFFF)
+        //             {
+        //                 multimode = true;
+        //                 if(trval != 0xFFFF) /* files do not match */
+        //                     return false;
+        //             }
+        //             else
+        //             {
+        //                 if(enval > str.length) {
+        //                     str = new byte[enval];
+        //                 }
+        //                 if(trval > str.length) {
+        //                     str = new byte[trval];
+        //                 }
+        //                 int val = ens.read(str, 0, enval);
+        //                 if(val != enval) /* file corrupt */
+        //                     return false;
+        //                 String enstr = new String(str, 0, enval, "utf-8");
+        //                 if(trval != 0)
+        //                 {
+        //                     val = trs.read(str, 0, trval);
+        //                     if(val != trval) /* file corrupt */
+        //                         return false;
+        //                     String trstr = new String(str, 0, trval, "utf-8");
+        //                     s.put(enstr, trstr);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // catch(Exception e)
+        // {
+        //     return false;
+        // }
+        // if(!s.isEmpty() && languages.containsKey(l))
+        // {
+        //     strings = s;
+        //     pstrings = p;
+        //     pluralMode = languages.get(l);
+        //     return true;
+        // }
+        //return false;
     }
 
     /**

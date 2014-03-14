@@ -126,12 +126,12 @@ public class TagCollection implements Iterable<Tag> {
      * @return a tag collection with the union of the tags which are common to all primitives in
      * the dataset <code>ds</code>
      */
-    public static TagCollection unionOfAllPrimitives(DataSet ds) {
-        TagCollection tags = new TagCollection();
-        if (ds == null) return tags;
-        tags.add(TagCollection.unionOfAllPrimitives(ds.allPrimitives()));
-        return tags;
-    }
+    // public static TagCollection unionOfAllPrimitives(DataSet ds) {
+    //     TagCollection tags = new TagCollection();
+    //     if (ds == null) return tags;
+    //     tags.add(TagCollection.unionOfAllPrimitives(ds.allPrimitives()));
+    //     return tags;
+    // }
 
     private final HashSet<Tag> tags = new HashSet<Tag>();
 

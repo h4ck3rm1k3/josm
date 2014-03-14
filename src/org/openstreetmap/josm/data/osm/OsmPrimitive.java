@@ -1,8 +1,9 @@
 // License: GPL. Copyright 2007 by Immanuel Scholz and others
 package org.openstreetmap.josm.data.osm;
 
-import static org.openstreetmap.josm.tools.I18n.tr;
+import org.openstreetmap.josm.data.osm.*;
 
+import static org.openstreetmap.josm.tools.I18n.tr;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,15 +20,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicLong;
+//import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.actions.search.SearchCompiler;
+// import org.openstreetmap.josm.actions.search.SearchCompiler.Match;
+// import org.openstreetmap.josm.actions.search.SearchCompiler.ParseError;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.actions.search.SearchCompiler;
-import org.openstreetmap.josm.actions.search.SearchCompiler.Match;
-import org.openstreetmap.josm.actions.search.SearchCompiler.ParseError;
+import org.openstreetmap.josm.data.osm.User;
+import org.openstreetmap.josm.data.osm.DataSet;
+import org.openstreetmap.josm.data.osm.NameFormatter;
+
 import org.openstreetmap.josm.data.osm.visitor.Visitor;
-import org.openstreetmap.josm.gui.mappaint.ElemStyle;
-import org.openstreetmap.josm.tools.CheckParameterUtil;
+
+// import org.openstreetmap.josm.gui.mappaint.ElemStyle;
+// import org.openstreetmap.josm.tools.CheckParameterUtil;
 import org.openstreetmap.josm.tools.Predicate;
+
 
 /**
  * An OSM primitive can be associated with a key/value pair. It can be created, deleted
@@ -179,7 +186,7 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
     }
 
     /* mappaint data */
-    public ElemStyle mappaintStyle = null;
+    //public ElemStyle mappaintStyle = null;
     public int mappaintDrawnCode = 0;
 
     /* This should not be called from outside. Fixing the UI to add relevant
@@ -188,7 +195,7 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
     protected void clearCached()
     {
         mappaintDrawnCode = 0;
-        mappaintStyle = null;
+        //mappaintStyle = null;
     }
     /* end of mappaint data */
 
@@ -200,25 +207,25 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
      */
     private long id = 0;
 
-    /** the parent dataset */
+    // /** the parent dataset */
     private DataSet dataSet;
 
-    /**
-     * This method should never ever by called from somewhere else than Dataset.addPrimitive or removePrimitive methods
-     * @param dataSet
-     */
-    void setDataset(DataSet dataSet) {
-        if (this.dataSet != null && dataSet != null && this.dataSet != dataSet)
-            throw new DataIntegrityProblemException("Primitive cannot be included in more than one Dataset");
-        this.dataSet = dataSet;
-    }
+    // /**
+    //  * This method should never ever by called from somewhere else than Dataset.addPrimitive or removePrimitive methods
+    //  * @param dataSet
+    //  */
+    public void setDataset(DataSet dataSet) {
+         if (this.dataSet != null && dataSet != null && this.dataSet != dataSet)
+             throw new DataIntegrityProblemException("Primitive cannot be included in more than one Dataset");
+         this.dataSet = dataSet;
+     }
 
     /**
      *
      * @return DataSet this primitive is part of.
      */
     public DataSet getDataSet() {
-        return dataSet;
+            return dataSet;
     }
 
     /**
@@ -602,81 +609,81 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
      * "uninteresting".  Only the first level namespace is considered.
      * Initialized by isUninterestingKey()
      */
-    public static Collection<String> getUninterestingKeys() {
-        if (uninteresting == null) {
-            uninteresting = Main.pref.getCollection("tags.uninteresting",
-                    Arrays.asList(new String[]{"source", "source_ref", "source:", "note", "comment",
-                            "converted_by", "created_by", "watch", "watch:"}));
-        }
-        return uninteresting;
-    }
+    // public static Collection<String> getUninterestingKeys() {
+    //     // if (uninteresting == null) {
+    //     //     //uninteresting = Main.pref.getCollection("tags.uninteresting",
+    //     //     Arrays.asList(new String[]{"source", "source_ref", "source:", "note", "comment",
+    //     //                     "converted_by", "created_by", "watch", "watch:"}));
+    //     // }
+    //     return uninteresting;
+    // }
 
     /**
      * Returns true if key is considered "uninteresting".
      */
     public static boolean isUninterestingKey(String key) {
-        getUninterestingKeys();
-        if (uninteresting.contains(key))
-            return true;
-        int pos = key.indexOf(':');
-        if (pos > 0)
-            return uninteresting.contains(key.substring(0, pos + 1));
+        //getUninterestingKeys();
+        //if (uninteresting.contains(key))
+        //   return true;
+        //int pos = key.indexOf(':');
+        //if (pos > 0)
+        //   return uninteresting.contains(key.substring(0, pos + 1));
         return false;
     }
 
-    private static volatile Match directionKeys = null;
-    private static volatile Match reversedDirectionKeys = null;
+    //private static volatile Match directionKeys = null;
+    //    private static volatile Match reversedDirectionKeys = null;
 
-    /**
-     * Contains a list of direction-dependent keys that make an object
-     * direction dependent.
-     * Initialized by checkDirectionTagged()
-     */
-    static {
-        // Legacy support - convert list of keys to search pattern
-        if (Main.pref.isCollection("tags.direction", false)) {
-            System.out.println("Collection of keys in tags.direction is no longer supported, value will converted to search pattern");
-            Collection<String> keys = Main.pref.getCollection("tags.direction", null);
-            StringBuilder builder = new StringBuilder();
-            for (String key:keys) {
-                builder.append(key);
-                builder.append("=* | ");
-            }
-            builder.delete(builder.length() - 3, builder.length());
-            Main.pref.put("tags.direction", builder.toString());
-        }
+    // /**
+    //  * Contains a list of direction-dependent keys that make an object
+    //  * direction dependent.
+    //  * Initialized by checkDirectionTagged()
+    //  */
+    // static {
+    //     // Legacy support - convert list of keys to search pattern
+    //     if (Main.pref.isCollection("tags.direction", false)) {
+    //         System.out.println("Collection of keys in tags.direction is no longer supported, value will converted to search pattern");
+    //         Collection<String> keys = Main.pref.getCollection("tags.direction", null);
+    //         StringBuilder builder = new StringBuilder();
+    //         for (String key:keys) {
+    //             builder.append(key);
+    //             builder.append("=* | ");
+    //         }
+    //         builder.delete(builder.length() - 3, builder.length());
+    //         Main.pref.put("tags.direction", builder.toString());
+    //     }
 
-        // FIXME: incline=\"-*\" search pattern does not work.
-        String reversedDirectionDefault = "oneway=\"-1\" | incline=down | incline=\"-*\"";
+    //     // FIXME: incline=\"-*\" search pattern does not work.
+    //     String reversedDirectionDefault = "oneway=\"-1\" | incline=down | incline=\"-*\"";
 
-        String directionDefault = "oneway? | incline=* | aerialway=* | "+
-        "waterway=stream | waterway=river | waterway=canal | waterway=drain | waterway=rapids | "+
-        "\"piste:type\"=downhill | \"piste:type\"=sled | man_made=\"piste:halfpipe\" | "+
-        "junction=roundabout";
+    //     String directionDefault = "oneway? | incline=* | aerialway=* | "+
+    //     "waterway=stream | waterway=river | waterway=canal | waterway=drain | waterway=rapids | "+
+    //     "\"piste:type\"=downhill | \"piste:type\"=sled | man_made=\"piste:halfpipe\" | "+
+    //     "junction=roundabout";
 
-        try {
-            reversedDirectionKeys = SearchCompiler.compile(Main.pref.get("tags.reversed_direction", reversedDirectionDefault), false, false);
-        } catch (ParseError e) {
-            System.err.println("Unable to compile pattern for tags.reversed_direction, trying default pattern: " + e.getMessage());
+    //     try {
+    //         reversedDirectionKeys = SearchCompiler.compile(Main.pref.get("tags.reversed_direction", reversedDirectionDefault), false, false);
+    //     } catch (ParseError e) {
+    //         System.err.println("Unable to compile pattern for tags.reversed_direction, trying default pattern: " + e.getMessage());
 
-            try {
-                reversedDirectionKeys = SearchCompiler.compile(reversedDirectionDefault, false, false);
-            } catch (ParseError e2) {
-                throw new AssertionError("Unable to compile default pattern for direction keys: " + e2.getMessage());
-            }
-        }
-        try {
-            directionKeys = SearchCompiler.compile(Main.pref.get("tags.direction", directionDefault), false, false);
-        } catch (ParseError e) {
-            System.err.println("Unable to compile pattern for tags.direction, trying default pattern: " + e.getMessage());
+    //         try {
+    //             reversedDirectionKeys = SearchCompiler.compile(reversedDirectionDefault, false, false);
+    //         } catch (ParseError e2) {
+    //             throw new AssertionError("Unable to compile default pattern for direction keys: " + e2.getMessage());
+    //         }
+    //     }
+    //     try {
+    //         directionKeys = SearchCompiler.compile(Main.pref.get("tags.direction", directionDefault), false, false);
+    //     } catch (ParseError e) {
+    //         System.err.println("Unable to compile pattern for tags.direction, trying default pattern: " + e.getMessage());
 
-            try {
-                directionKeys = SearchCompiler.compile(directionDefault, false, false);
-            } catch (ParseError e2) {
-                throw new AssertionError("Unable to compile default pattern for direction keys: " + e2.getMessage());
-            }
-        }
-    }
+    //         try {
+    //             directionKeys = SearchCompiler.compile(directionDefault, false, false);
+    //         } catch (ParseError e2) {
+    //             throw new AssertionError("Unable to compile default pattern for direction keys: " + e2.getMessage());
+    //         }
+    //     }
+    // }
 
     /**
      * Replies a list of direction-dependent keys that make an object
@@ -685,11 +692,11 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
      * @return  a list of direction-dependent keys that make an object
      * direction dependent.
      */
-    @Deprecated
-    public static Collection<String> getDirectionKeys() {
-        return Main.pref.getCollection("tags.direction",
-                Arrays.asList("oneway","incline","incline_steep","aerialway"));
-    }
+    // @Deprecated
+    // public static Collection<String> getDirectionKeys() {
+    //     //return Main.pref.getCollection("tags.direction",
+    //     //Arrays.asList("oneway","incline","incline_steep","aerialway"));
+    // }
 
     /**
      * Implementation of the visitor scheme. Subclasses have to call the correct
@@ -714,9 +721,9 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
         setModified(deleted);
         if (dataSet != null) {
             if (deleted) {
-                dataSet.firePrimitivesRemoved(Collections.singleton(this), false);
+                //dataSet.firePrimitivesRemoved(Collections.singleton(this), false);
             } else {
-                dataSet.firePrimitivesAdded(Collections.singleton(this), false);
+                //dataSet.firePrimitivesAdded(Collections.singleton(this), false);
             }
         }
     }
@@ -735,9 +742,9 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
      *
      * @param user the user
      */
-    public void setUser(User user) {
-        this.user = user;
-    }
+     public void setUser(User user) {
+         this.user = user;
+     }
 
     /**
      * Replies the id of the changeset this primitive was last uploaded to.
@@ -768,7 +775,7 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
         int old = this.changesetId;
         this.changesetId = changesetId;
         if (dataSet != null) {
-            dataSet.fireChangesetIdChanged(this, old, changesetId);
+            //dataSet.fireChangesetIdChanged(this, old, changesetId);
         }
     }
 
@@ -960,10 +967,10 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
 
     private void keysChangedImpl(Map<String, String> originalKeys) {
         clearCached();
-        updateDirectionFlags();
+        //updateDirectionFlags();
         updateTagged();
         if (dataSet != null) {
-            dataSet.fireTagsChanged(this, originalKeys);
+            //dataSet.fireTagsChanged(this, originalKeys);
         }
     }
 
@@ -1133,21 +1140,21 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
      * @throws DataIntegrityProblemException thrown if either this is new and other is not, or other is new and this is not
      * @throws DataIntegrityProblemException thrown if other isn't new and other.getId() != this.getId()
      */
-    public void mergeFrom(OsmPrimitive other) {
-        CheckParameterUtil.ensureParameterNotNull(other, "other");
-        if (other.isNew() ^ isNew())
-            throw new DataIntegrityProblemException(tr("Cannot merge because either of the participating primitives is new and the other is not"));
-        if (! other.isNew() && other.getId() != id)
-            throw new DataIntegrityProblemException(tr("Cannot merge primitives with different ids. This id is {0}, the other is {1}", id, other.getId()));
+    // public void mergeFrom(OsmPrimitive other) {
+    //     CheckParameterUtil.ensureParameterNotNull(other, "other");
+    //     if (other.isNew() ^ isNew())
+    //         throw new DataIntegrityProblemException(tr("Cannot merge because either of the participating primitives is new and the other is not"));
+    //     if (! other.isNew() && other.getId() != id)
+    //         throw new DataIntegrityProblemException(tr("Cannot merge primitives with different ids. This id is {0}, the other is {1}", id, other.getId()));
 
-        setKeys(other.getKeys());
-        timestamp = other.timestamp;
-        version = other.version;
-        setIncomplete(other.isIncomplete());
-        flags = other.flags;
-        user= other.user;
-        changesetId = other.changesetId;
-    }
+    //     setKeys(other.getKeys());
+    //     timestamp = other.timestamp;
+    //     version = other.version;
+    //     setIncomplete(other.isIncomplete());
+    //     flags = other.flags;
+    //     user= other.user;
+    //     changesetId = other.changesetId;
+    // }
 
     /**
      * Replies true if this primitive and other are equal with respect to their
@@ -1222,28 +1229,28 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
         return (flags & FLAG_TAGGED) != 0;
     }
 
-    private void updateDirectionFlags() {
-        boolean hasDirections = false;
-        boolean directionReversed = false;
-        if (reversedDirectionKeys.match(this)) {
-            hasDirections = true;
-            directionReversed = true;
-        }
-        if (directionKeys.match(this)) {
-            hasDirections = true;
-        }
+    // private void updateDirectionFlags() {
+    //     boolean hasDirections = false;
+    //     boolean directionReversed = false;
+    //     if (reversedDirectionKeys.match(this)) {
+    //         hasDirections = true;
+    //         directionReversed = true;
+    //     }
+    //     if (directionKeys.match(this)) {
+    //         hasDirections = true;
+    //     }
 
-        if (directionReversed) {
-            flags |= FLAG_DIRECTION_REVERSED;
-        } else {
-            flags &= ~FLAG_DIRECTION_REVERSED;
-        }
-        if (hasDirections) {
-            flags |= FLAG_HAS_DIRECTIONS;
-        } else {
-            flags &= ~FLAG_HAS_DIRECTIONS;
-        }
-    }
+    //     if (directionReversed) {
+    //         flags |= FLAG_DIRECTION_REVERSED;
+    //     } else {
+    //         flags &= ~FLAG_DIRECTION_REVERSED;
+    //     }
+    //     if (hasDirections) {
+    //         flags |= FLAG_HAS_DIRECTIONS;
+    //     } else {
+    //         flags &= ~FLAG_HAS_DIRECTIONS;
+    //     }
+    // }
 
     /**
      * true if this object has direction dependent tags (e.g. oneway)
@@ -1393,9 +1400,9 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
     private void setIncomplete(boolean incomplete) {
         if (dataSet != null && incomplete != this.isIncomplete()) {
             if (incomplete) {
-                dataSet.firePrimitivesRemoved(Collections.singletonList(this), true);
+                //dataSet.firePrimitivesRemoved(Collections.singletonList(this), true);
             } else {
-                dataSet.firePrimitivesAdded(Collections.singletonList(this), true);
+                //dataSet.firePrimitivesAdded(Collections.singletonList(this), true);
             }
         }
         if (incomplete) {
@@ -1409,9 +1416,9 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
         return (flags & FLAG_INCOMPLETE) != 0;
     }
 
-    public boolean isSelected() {
-        return dataSet != null && dataSet.isSelected(this);
-    }
+    // public boolean isSelected() {
+    //     return dataSet != null && dataSet.isSelected(this);
+    // }
 
     public void setHighlighted(boolean highlighted) {
         if (isHighlighted() != highlighted) {
@@ -1421,7 +1428,7 @@ abstract public class OsmPrimitive implements Comparable<OsmPrimitive>, Tagged, 
                 flags &= ~FLAG_HIGHLIGHTED;
             }
             if (dataSet != null) {
-                dataSet.fireHighlightingChanged(this);
+                //dataSet.fireHighlightingChanged(this);
             }
         }
     }

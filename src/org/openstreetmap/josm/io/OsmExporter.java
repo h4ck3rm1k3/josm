@@ -14,31 +14,32 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.text.MessageFormat;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.actions.ExtensionFileFilter;
+//import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.actions.ExtensionFileFilter;
 import org.openstreetmap.josm.gui.layer.Layer;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+//import org.openstreetmap.josm.io.FileExporter;
 
-public class OsmExporter extends FileExporter {
+public class OsmExporter {
 
     public OsmExporter() {
         super(new ExtensionFileFilter("osm,xml", "osm", tr("OSM Server Files") + " (*.osm *.xml)"));
     }
 
-    public OsmExporter(ExtensionFileFilter filter) {
-        super(filter);
-    }
+    //public OsmExporter(ExtensionFileFilter filter) {
+    //        super(filter);
+    // }
 
-    @Override
+    //@Override
     public boolean acceptFile(File pathname, Layer layer) {
         if (!(layer instanceof OsmDataLayer))
             return false;
         return super.acceptFile(pathname, layer);
     }
 
-    @Override
+    //@Override
     public void exportData(File file, Layer layer) throws IOException {
         if (layer instanceof OsmDataLayer) {
             save(file, (OsmDataLayer) layer);

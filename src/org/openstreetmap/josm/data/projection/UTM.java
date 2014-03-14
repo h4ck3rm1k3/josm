@@ -379,20 +379,20 @@ public class UTM implements Projection, ProjectionSubPrefs {
         return 10;
     }
 
-    public void setupPreferencePanel(JPanel p) {
-        JComboBox prefcb = new JComboBox();
-        for(int i = 1; i <= 60; i++) {
-            prefcb.addItem(i);
-        }
+    // public void setupPreferencePanel(JPanel p) {
+    //     JComboBox prefcb = new JComboBox();
+    //     for(int i = 1; i <= 60; i++) {
+    //         prefcb.addItem(i);
+    //     }
 
-        prefcb.setSelectedIndex(zone - 1);
-        p.setLayout(new GridBagLayout());
-        p.add(new JLabel(tr("UTM Zone")), GBC.std().insets(5,5,0,5));
-        p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
-        /* Note: we use component position 2 below to find this again */
-        p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
-        p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
-    }
+    //     prefcb.setSelectedIndex(zone - 1);
+    //     p.setLayout(new GridBagLayout());
+    //     p.add(new JLabel(tr("UTM Zone")), GBC.std().insets(5,5,0,5));
+    //     p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
+    //     /* Note: we use component position 2 below to find this again */
+    //     p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
+    //     p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
+    // }
 
     public Collection<String> getPreferences(JPanel p) {
         Object prefcb = p.getComponent(2);

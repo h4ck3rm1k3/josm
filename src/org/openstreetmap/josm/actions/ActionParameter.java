@@ -1,7 +1,7 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.actions;
 
-import org.openstreetmap.josm.actions.search.SearchAction.SearchSetting;
+//import org.openstreetmap.josm.actions.search.SearchAction.SearchSetting;
 
 public abstract class ActionParameter<T> {
 
@@ -44,29 +44,29 @@ public abstract class ActionParameter<T> {
 
     }
 
-    public static class SearchSettingsActionParameter extends ActionParameter<SearchSetting> {
+    // public static class SearchSettingsActionParameter extends ActionParameter<SearchSetting> {
 
-        public SearchSettingsActionParameter(String name) {
-            super(name);
-        }
+    //     public SearchSettingsActionParameter(String name) {
+    //         super(name);
+    //     }
 
-        @Override
-        public Class<SearchSetting> getType() {
-            return SearchSetting.class;
-        }
+        // @Override
+        // public Class<SearchSetting> getType() {
+        //     return SearchSetting.class;
+        // }
 
-        @Override
-        public SearchSetting readFromString(String s) {
-            SearchSetting result = SearchSetting.readFromString(s);
-            return result;
-        }
+        // @Override
+        // public SearchSetting readFromString(String s) {
+        //     SearchSetting result = SearchSetting.readFromString(s);
+        //     return result;
+        // }
 
-        @Override
-        public String writeToString(SearchSetting value) {
-            if (value == null)
-                return "";
-            return value.writeToString();
-        }
+        // @Override
+        // public String writeToString(SearchSetting value) {
+        //     if (value == null)
+        //         return "";
+        //     return value.writeToString();
+        // }
 
     }
 }

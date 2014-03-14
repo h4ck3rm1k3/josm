@@ -13,8 +13,9 @@ import static java.lang.Math.toRadians;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import org.openstreetmap.josm.data.coor.CoordinateFormat;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.Bounds;
 
 /**
@@ -95,7 +96,7 @@ public class LatLon extends Coordinate {
         case DEGREES_MINUTES_SECONDS: return dms(y) + ((y < 0) ?
                 /* short symbol for South */ trc("compass", "S") :
                     /* short symbol for North */ trc("compass", "N"));
-        case EAST_NORTH: return cDdFormatter.format(Main.proj.latlon2eastNorth(this).north());
+            //case EAST_NORTH: return cDdFormatter.format(Main.proj.latlon2eastNorth(this).north());
         default: return "ERR";
         }
     }
@@ -110,7 +111,7 @@ public class LatLon extends Coordinate {
         case DEGREES_MINUTES_SECONDS: return dms(x) + ((x < 0) ?
                 /* short symbol for West */ trc("compass", "W") :
                     /* short symbol for East */ trc("compass", "E"));
-        case EAST_NORTH: return cDdFormatter.format(Main.proj.latlon2eastNorth(this).east());
+            //case EAST_NORTH: return cDdFormatter.format(Main.proj.latlon2eastNorth(this).east());
         default: return "ERR";
         }
     }
@@ -130,9 +131,10 @@ public class LatLon extends Coordinate {
      * by using lat/lon.
      */
     public boolean isOutSideWorld() {
-        Bounds b = Main.proj.getWorldBoundsLatLon();
-        return lat() < b.getMin().lat() || lat() > b.getMax().lat() ||
-        lon() < b.getMin().lon() || lon() > b.getMax().lon();
+        //Bounds b = Main.proj.getWorldBoundsLatLon();
+        //return lat() < b.getMin().lat() || lat() > b.getMax().lat() ||
+        //lon() < b.getMin().lon() || lon() > b.getMax().lon();
+        return false;
     }
 
     /**

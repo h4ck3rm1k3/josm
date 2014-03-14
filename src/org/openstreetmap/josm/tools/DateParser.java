@@ -3,9 +3,11 @@ package org.openstreetmap.josm.tools;
 
 import java.text.ParseException;
 import java.util.Date;
+import org.openstreetmap.josm.tools.PrimaryDateParser;
 
 /**
- * Tries to parse a date as good as it can.
+ * A thin wrapper around PrimaryDateParser
+ * TODO : get rid of this class
  *
  * @author Immanuel.Scholz
  */

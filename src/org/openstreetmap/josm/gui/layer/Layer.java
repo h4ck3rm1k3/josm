@@ -14,14 +14,14 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 
-import org.openstreetmap.josm.actions.GpxExportAction;
-import org.openstreetmap.josm.actions.SaveAction;
-import org.openstreetmap.josm.actions.SaveAsAction;
+//import org.openstreetmap.josm.actions.GpxExportAction;
+//import org.openstreetmap.josm.actions.SaveAction;
+///import org.openstreetmap.josm.actions.SaveAsAction;
 import org.openstreetmap.josm.data.Bounds;
-import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
-import org.openstreetmap.josm.gui.MapView;
+//import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
+//import org.openstreetmap.josm.gui.MapView;
 import org.openstreetmap.josm.tools.Destroyable;
-import org.openstreetmap.josm.tools.ImageProvider;
+//import org.openstreetmap.josm.tools.ImageProvider;
 
 /**
  * A layer encapsulates the gui component of one dataset and its representation.
@@ -38,7 +38,7 @@ import org.openstreetmap.josm.tools.ImageProvider;
  *
  * @author imi
  */
-abstract public class Layer implements Destroyable, MapViewPaintable {
+abstract public class Layer implements Destroyable {
     static public final String VISIBLE_PROP = Layer.class.getName() + ".visible";
     static public final String NAME_PROP = Layer.class.getName() + ".name";
 
@@ -80,12 +80,12 @@ abstract public class Layer implements Destroyable, MapViewPaintable {
      * Paint the dataset using the engine set.
      * @param mv The object that can translate GeoPoints to screen coordinates.
      */
-    abstract public void paint(Graphics2D g, MapView mv, Bounds box);
-    /**
-     * Return a representative small image for this layer. The image must not
-     * be larger than 64 pixel in any dimension.
-     */
-    abstract public Icon getIcon();
+    // abstract public void paint(Graphics2D g, MapView mv, Bounds box);
+    // /**
+    //  * Return a representative small image for this layer. The image must not
+    //  * be larger than 64 pixel in any dimension.
+    //  */
+    // abstract public Icon getIcon();
 
     /**
      * @return A small tooltip hint about some statistics for this layer.
@@ -107,7 +107,7 @@ abstract public class Layer implements Destroyable, MapViewPaintable {
      */
     abstract public boolean isMergable(Layer other);
 
-    abstract public void visitBoundingBox(BoundingXYVisitor v);
+    // abstract public void visitBoundingBox(BoundingXYVisitor v);
 
     abstract public Object getInfoComponent();
 

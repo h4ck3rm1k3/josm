@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 
 /**
  * Use this class if you want to cache a lot of files that shouldn't be kept in memory. You can

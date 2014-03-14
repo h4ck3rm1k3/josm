@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.gui.MapFrame;
-import org.openstreetmap.josm.gui.download.DownloadSelection;
-import org.openstreetmap.josm.gui.preferences.PreferenceSetting;
+//import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.gui.MapFrame;
+//import org.openstreetmap.josm.gui.download.DownloadSelection;
+//import org.openstreetmap.josm.gui.preferences.PreferenceSetting;
 
 /**
  * For all purposes of loading dynamic resources, the Plugin's class loader should be used
@@ -84,13 +84,13 @@ public abstract class Plugin {
      * You can use this callback to tweak the newFrame to your needs, as example install
      * an alternative Painter.
      */
-    public void mapFrameInitialized(MapFrame oldFrame, MapFrame newFrame) {}
+    //public void mapFrameInitialized(MapFrame oldFrame, MapFrame newFrame) {}
 
     /**
      * Called in the preferences dialog to create a preferences page for the plugin,
      * if any available.
      */
-    public PreferenceSetting getPreferenceSetting() { return null; }
+    //public PreferenceSetting getPreferenceSetting() { return null; }
 
     /**
      * Called in the download dialog to give the plugin a chance to modify the list

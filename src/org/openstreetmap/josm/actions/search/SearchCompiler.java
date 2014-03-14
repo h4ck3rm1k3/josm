@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.openstreetmap.josm.Main;
+//import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.search.PushbackTokenizer.Range;
 import org.openstreetmap.josm.actions.search.PushbackTokenizer.Token;
 import org.openstreetmap.josm.data.osm.Node;
