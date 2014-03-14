@@ -111,25 +111,25 @@ public class DataSet {
     // /**
     //  * The API version that created this data set, if any.
     //  */
-    // private String version;
+    private String version;
 
     // /**
     //  * Replies the API version this dataset was created from. May be null.
     //  *
     //  * @return the API version this dataset was created from. May be null.
     //  */
-    // public String getVersion() {
-    //     return version;
-    // }
+     public String getVersion() {
+         return version;
+     }
 
     // /**
     //  * Sets the API version this dataset was created from.
     //  *
     //  * @param version the API version, i.e. "0.5" or "0.6"
     //  */
-    // public void setVersion(String version) {
-    //     this.version = version;
-    // }
+     public void setVersion(String version) {
+         this.version = version;
+     }
 
     // /**
     //  * All nodes goes here, even when included in other data (ways etc). This enables the instant
@@ -207,28 +207,28 @@ public class DataSet {
     // /**
     //  * @return A collection containing all primitives of the dataset. Data are not ordered
     //  */
-    // public Collection<OsmPrimitive> allPrimitives() {
-    //     return getPrimitives(OsmPrimitive.allPredicate);
-    // }
+    public Collection<OsmPrimitive> allPrimitives() {
+         return getPrimitives(OsmPrimitive.allPredicate);
+    }
 
     // /**
     //  * @return A collection containing all not-deleted primitives (except keys).
     //  */
-    // public Collection<OsmPrimitive> allNonDeletedPrimitives() {
-    //     return getPrimitives(OsmPrimitive.nonDeletedPredicate);
-    // }
+    public Collection<OsmPrimitive> allNonDeletedPrimitives() {
+         return getPrimitives(OsmPrimitive.nonDeletedPredicate);
+     }
 
-    // public Collection<OsmPrimitive> allNonDeletedCompletePrimitives() {
-    //     return getPrimitives(OsmPrimitive.nonDeletedCompletePredicate);
-    // }
+     public Collection<OsmPrimitive> allNonDeletedCompletePrimitives() {
+         return getPrimitives(OsmPrimitive.nonDeletedCompletePredicate);
+     }
 
-    // public Collection<OsmPrimitive> allNonDeletedPhysicalPrimitives() {
-    //     return getPrimitives(OsmPrimitive.nonDeletedPhysicalPredicate);
-    // }
+     public Collection<OsmPrimitive> allNonDeletedPhysicalPrimitives() {
+         return getPrimitives(OsmPrimitive.nonDeletedPhysicalPredicate);
+     }
 
-    // public Collection<OsmPrimitive> allModifiedPrimitives() {
-    //     return getPrimitives(OsmPrimitive.modifiedPredicate);
-    // }
+     public Collection<OsmPrimitive> allModifiedPrimitives() {
+         return getPrimitives(OsmPrimitive.modifiedPredicate);
+     }
 
     // /**
     //  * Adds a primitive to the dataset

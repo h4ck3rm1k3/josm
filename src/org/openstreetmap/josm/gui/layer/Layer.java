@@ -20,7 +20,7 @@ import javax.swing.Icon;
 import org.openstreetmap.josm.data.Bounds;
 //import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
 //import org.openstreetmap.josm.gui.MapView;
-import org.openstreetmap.josm.tools.Destroyable;
+//import org.openstreetmap.josm.tools.Destroyable;
 //import org.openstreetmap.josm.tools.ImageProvider;
 
 /**
@@ -38,7 +38,8 @@ import org.openstreetmap.josm.tools.Destroyable;
  *
  * @author imi
  */
-abstract public class Layer implements Destroyable {
+abstract public class Layer // implements Destroyable
+{
     static public final String VISIBLE_PROP = Layer.class.getName() + ".visible";
     static public final String NAME_PROP = Layer.class.getName() + ".name";
 
@@ -90,7 +91,7 @@ abstract public class Layer implements Destroyable {
     /**
      * @return A small tooltip hint about some statistics for this layer.
      */
-    abstract public String getToolTipText();
+    //    abstract public String getToolTipText();
 
     /**
      * Merges the given layer into this layer. Throws if the layer types are
@@ -99,19 +100,19 @@ abstract public class Layer implements Destroyable {
      *      the other layer is not usable anymore and passing to one others
      *      mergeFrom should be one of the last things to do with a layer.
      */
-    abstract public void mergeFrom(Layer from);
+    //abstract public void mergeFrom(Layer from);
 
     /**
      * @param other The other layer that is tested to be mergable with this.
      * @return Whether the other layer can be merged into this layer.
      */
-    abstract public boolean isMergable(Layer other);
+    //abstract public boolean isMergable(Layer other);
 
     // abstract public void visitBoundingBox(BoundingXYVisitor v);
 
-    abstract public Object getInfoComponent();
+    //abstract public Object getInfoComponent();
 
-    abstract public Component[] getMenuEntries();
+    //    abstract public Component[] getMenuEntries();
 
     /**
      * Called, when the layer is removed from the mapview and is going to be
@@ -240,48 +241,48 @@ abstract public class Layer implements Destroyable {
      * The action to save a layer
      *
      */
-    public static class LayerSaveAction extends AbstractAction {
-        private Layer layer;
-        public LayerSaveAction(Layer layer) {
-            putValue(SMALL_ICON, ImageProvider.get("save"));
-            putValue(SHORT_DESCRIPTION, tr("Save the current data."));
-            putValue(NAME, tr("Save"));
-            setEnabled(true);
-            this.layer = layer;
-        }
+    //public static class LayerSaveAction extends AbstractAction {
+    //     private Layer layer;
+    //     public LayerSaveAction(Layer layer) {
+    //         putValue(SMALL_ICON, ImageProvider.get("save"));
+    //         putValue(SHORT_DESCRIPTION, tr("Save the current data."));
+    //         putValue(NAME, tr("Save"));
+    //         setEnabled(true);
+    //         this.layer = layer;
+    //     }
 
-        public void actionPerformed(ActionEvent e) {
-            new SaveAction().doSave(layer);
-        }
-    }
+    //     public void actionPerformed(ActionEvent e) {
+    //         new SaveAction().doSave(layer);
+    //     }
+    // }
 
-    public static class LayerSaveAsAction extends AbstractAction {
-        private Layer layer;
-        public LayerSaveAsAction(Layer layer) {
-            putValue(SMALL_ICON, ImageProvider.get("save_as"));
-            putValue(SHORT_DESCRIPTION, tr("Save the current data to a new file."));
-            putValue(NAME, tr("Save As..."));
-            setEnabled(true);
-            this.layer = layer;
-        }
+    // public static class LayerSaveAsAction extends AbstractAction {
+    //     private Layer layer;
+    //     public LayerSaveAsAction(Layer layer) {
+    //         putValue(SMALL_ICON, ImageProvider.get("save_as"));
+    //         putValue(SHORT_DESCRIPTION, tr("Save the current data to a new file."));
+    //         putValue(NAME, tr("Save As..."));
+    //         setEnabled(true);
+    //         this.layer = layer;
+    //     }
 
-        public void actionPerformed(ActionEvent e) {
-            new SaveAsAction().doSave(layer);
-        }
-    }
+    //     public void actionPerformed(ActionEvent e) {
+    //         new SaveAsAction().doSave(layer);
+    //     }
+    // }
 
-    public static class LayerGpxExportAction extends AbstractAction {
-        private Layer layer;
-        public LayerGpxExportAction(Layer layer) {
-            putValue(SMALL_ICON, ImageProvider.get("exportgpx"));
-            putValue(SHORT_DESCRIPTION, tr("Export the data to GPX file."));
-            putValue(NAME, tr("Export to GPX..."));
-            setEnabled(true);
-            this.layer = layer;
-        }
+    // public static class LayerGpxExportAction extends AbstractAction {
+    //     private Layer layer;
+    //     public LayerGpxExportAction(Layer layer) {
+    //         putValue(SMALL_ICON, ImageProvider.get("exportgpx"));
+    //         putValue(SHORT_DESCRIPTION, tr("Export the data to GPX file."));
+    //         putValue(NAME, tr("Export to GPX..."));
+    //         setEnabled(true);
+    //         this.layer = layer;
+    //     }
 
-        public void actionPerformed(ActionEvent e) {
-            new GpxExportAction().export(layer);
-        }
-    }
+    //     public void actionPerformed(ActionEvent e) {
+    //         new GpxExportAction().export(layer);
+    //     }
+   
 }

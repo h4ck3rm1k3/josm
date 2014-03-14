@@ -51,7 +51,7 @@ import org.openstreetmap.josm.data.coor.LatLon;
 // import org.openstreetmap.josm.data.gpx.WayPoint;
 import org.openstreetmap.josm.data.osm.DataSet;
 //import org.openstreetmap.josm.data.osm.DataSetMerger;
-import org.openstreetmap.josm.data.osm.DataSource;
+//import org.openstreetmap.josm.data.osm.DataSource;
 //import org.openstreetmap.josm.data.osm.DatasetCollection;
 //import org.openstreetmap.josm.data.osm.DatasetConsistencyTest;
 import org.openstreetmap.josm.data.osm.Node;
@@ -61,7 +61,7 @@ import org.openstreetmap.josm.data.osm.Way;
 //import org.openstreetmap.josm.data.osm.event.AbstractDatasetChangedEvent;
 //import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter;
 //import org.openstreetmap.josm.data.osm.event.DataSetListenerAdapter.Listener;
-// import org.openstreetmap.josm.data.osm.visitor.AbstractVisitor;
+ import org.openstreetmap.josm.data.osm.visitor.AbstractVisitor;
 // import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
 // import org.openstreetmap.josm.data.osm.visitor.paint.MapPaintVisitor;
 // import org.openstreetmap.josm.data.osm.visitor.paint.PaintVisitor;
@@ -74,6 +74,7 @@ import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.tools.DateUtils;
 import org.openstreetmap.josm.tools.GBC;
 //import org.openstreetmap.josm.tools.ImageProvider;
+import org.openstreetmap.josm.gui.layer.Layer;
 
 /**
  * A layer holding data from a specific dataset.
@@ -121,7 +122,7 @@ public class OsmDataLayer extends Layer
         return tr("Data Layer {0}", dataLayerCounter);
     }
 
-    public final static class DataCountVisitor // extends AbstractVisitor 
+    public final static class DataCountVisitor extends AbstractVisitor 
     {
         public int nodes;
         public int ways;
@@ -188,11 +189,11 @@ public class OsmDataLayer extends Layer
     public static void createHatchTexture() {
         BufferedImage bi = new BufferedImage(15, 15, BufferedImage.TYPE_INT_ARGB);
         Graphics2D big = bi.createGraphics();
-        big.setColor(Main.pref.getColor(marktr("background"), Color.BLACK));
+        //big.setColor(Main.pref.getColor(marktr("background"), Color.BLACK));
         Composite comp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
         big.setComposite(comp);
         big.fillRect(0,0,15,15);
-        big.setColor(Main.pref.getColor(marktr("outside downloaded area"), Color.YELLOW));
+        ///big.setColor(Main.pref.getColor(marktr("outside downloaded area"), Color.YELLOW));
         big.drawLine(0,15,15,0);
         Rectangle r = new Rectangle(0, 0, 15,15);
         hatched = new TexturePaint(bi, r);
@@ -205,18 +206,18 @@ public class OsmDataLayer extends Layer
         super(name);
         this.data = data;
         this.setAssociatedFile(associatedFile);
-        conflicts = new ConflictCollection();
-        data.addDataSetListener(new DataSetListenerAdapter(this));
-        DataSet.selListeners.add(this);
+        //conflicts = new ConflictCollection();
+        //data.addDataSetListener(new DataSetListenerAdapter(this));
+        //DataSet.selListeners.add(this);
     }
 
     /**
      * TODO: @return Return a dynamic drawn icon of the map data. The icon is
      *         updated by a background thread to not disturb the running programm.
      */
-    @Override public Icon getIcon() {
-        return ImageProvider.get("layer", "osmdata_small");
-    }
+    // @Override public Icon getIcon() {
+    //     /return ImageProvider.get("layer", "osmdata_small");
+    // }
 
     /**
      * Draw all primitives in this layer but do not draw modified ones (they
@@ -288,9 +289,9 @@ public class OsmDataLayer extends Layer
     //     return tool;
     // }
 
-    @Override public void mergeFrom(final Layer from) {
-        mergeFrom(((OsmDataLayer)from).data);
-    }
+    // @Override public void mergeFrom(final Layer from) {
+    //     mergeFrom(((OsmDataLayer)from).data);
+    // }
 
     /**
      * merges the primitives in dataset <code>from</code> into the dataset of
@@ -298,48 +299,48 @@ public class OsmDataLayer extends Layer
      *
      * @param from  the source data set
      */
-    public void mergeFrom(final DataSet from) {
-        final DataSetMerger visitor = new DataSetMerger(data,from);
-        visitor.merge();
+    // public void mergeFrom(final DataSet from) {
+    //     final DataSetMerger visitor = new DataSetMerger(data,from);
+    //     visitor.merge();
 
-        Area a = data.getDataSourceArea();
+    //     Area a = data.getDataSourceArea();
 
-        // copy the merged layer's data source info;
-        // only add source rectangles if they are not contained in the
-        // layer already.
-        for (DataSource src : from.dataSources) {
-            if (a == null || !a.contains(src.bounds.asRect())) {
-                data.dataSources.add(src);
-            }
-        }
+    //     // copy the merged layer's data source info;
+    //     // only add source rectangles if they are not contained in the
+    //     // layer already.
+    //     for (DataSource src : from.dataSources) {
+    //         if (a == null || !a.contains(src.bounds.asRect())) {
+    //             data.dataSources.add(src);
+    //         }
+    //     }
 
-        // copy the merged layer's API version, downgrade if required
-        if (data.getVersion() == null) {
-            data.setVersion(from.getVersion());
-        } else if ("0.5".equals(data.getVersion()) ^ "0.5".equals(from.getVersion())) {
-            System.err.println(tr("Warning: mixing 0.6 and 0.5 data results in version 0.5"));
-            data.setVersion("0.5");
-        }
+    //     // copy the merged layer's API version, downgrade if required
+    //     if (data.getVersion() == null) {
+    //         data.setVersion(from.getVersion());
+    //     } else if ("0.5".equals(data.getVersion()) ^ "0.5".equals(from.getVersion())) {
+    //         System.err.println(tr("Warning: mixing 0.6 and 0.5 data results in version 0.5"));
+    //         data.setVersion("0.5");
+    //     }
 
-        int numNewConflicts = 0;
-        for (Conflict<?> c : visitor.getConflicts()) {
-            if (!conflicts.hasConflict(c)) {
-                numNewConflicts++;
-                conflicts.add(c);
-            }
-        }
-        PurgePrimitivesCommand cmd = buildPurgeCommand();
-        if (cmd != null) {
-            Main.main.undoRedo.add(cmd);
-        }
-        fireDataChange();
-        // repaint to make sure new data is displayed properly.
-        Main.map.mapView.repaint();
-        warnNumNewConflicts(
-                numNewConflicts,
-                cmd == null ? 0 : cmd.getPurgedPrimitives().size()
-        );
-    }
+    //     int numNewConflicts = 0;
+    //     for (Conflict<?> c : visitor.getConflicts()) {
+    //         if (!conflicts.hasConflict(c)) {
+    //             numNewConflicts++;
+    //             conflicts.add(c);
+    //         }
+    //     }
+    //     PurgePrimitivesCommand cmd = buildPurgeCommand();
+    //     if (cmd != null) {
+    //         Main.main.undoRedo.add(cmd);
+    //     }
+    //     fireDataChange();
+    //     // repaint to make sure new data is displayed properly.
+    //     Main.map.mapView.repaint();
+    //     warnNumNewConflicts(
+    //             numNewConflicts,
+    //             cmd == null ? 0 : cmd.getPurgedPrimitives().size()
+    //     );
+    // }
 
     /**
      * Warns the user about the number of detected conflicts
@@ -347,64 +348,64 @@ public class OsmDataLayer extends Layer
      * @param numNewConflicts the number of detected conflicts
      * @param numPurgedPrimitives the number of automatically purged objects
      */
-    protected void warnNumNewConflicts(int numNewConflicts, int numPurgedPrimitives) {
-        if (numNewConflicts == 0 && numPurgedPrimitives == 0) return;
+    // protected void warnNumNewConflicts(int numNewConflicts, int numPurgedPrimitives) {
+    //     if (numNewConflicts == 0 && numPurgedPrimitives == 0) return;
 
-        String msg1 = trn(
-                "There was {0} conflict detected.",
-                "There were {0} conflicts detected.",
-                numNewConflicts,
-                numNewConflicts
-        );
-        String msg2 = trn(
-                "{0} conflict has been <strong>resolved automatically</strong> by purging {0} object<br>from the local dataset because it is deleted on the server.",
-                "{0} conflicts have been <strong>resolved automatically</strong> by purging {0} objects<br> from the local dataset because they are deleted on the server.",
-                numPurgedPrimitives,
-                numPurgedPrimitives
-        );
-        int numRemainingConflicts = numNewConflicts - numPurgedPrimitives;
-        String msg3 = "";
-        if (numRemainingConflicts >0) {
-            msg3 = trn(
-                    "{0} conflict remains to be resolved.<br><br>Please open the Conflict List Dialog and manually resolve it.",
-                    "{0} conflicts remain to be resolved.<br><br>Please open the Conflict List Dialog and manually resolve them.",
-                    numRemainingConflicts,
-                    numRemainingConflicts
-            );
-        }
+    //     String msg1 = trn(
+    //             "There was {0} conflict detected.",
+    //             "There were {0} conflicts detected.",
+    //             numNewConflicts,
+    //             numNewConflicts
+    //     );
+    //     String msg2 = trn(
+    //             "{0} conflict has been <strong>resolved automatically</strong> by purging {0} object<br>from the local dataset because it is deleted on the server.",
+    //             "{0} conflicts have been <strong>resolved automatically</strong> by purging {0} objects<br> from the local dataset because they are deleted on the server.",
+    //             numPurgedPrimitives,
+    //             numPurgedPrimitives
+    //     );
+    //     int numRemainingConflicts = numNewConflicts - numPurgedPrimitives;
+    //     String msg3 = "";
+    //     if (numRemainingConflicts >0) {
+    //         msg3 = trn(
+    //                 "{0} conflict remains to be resolved.<br><br>Please open the Conflict List Dialog and manually resolve it.",
+    //                 "{0} conflicts remain to be resolved.<br><br>Please open the Conflict List Dialog and manually resolve them.",
+    //                 numRemainingConflicts,
+    //                 numRemainingConflicts
+    //         );
+    //     }
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("<html>").append(msg1);
-        if (numPurgedPrimitives > 0) {
-            sb.append("<br>").append(msg2);
-        }
-        if (numRemainingConflicts > 0) {
-            sb.append("<br>").append(msg3);
-        }
-        sb.append("</html>");
-        if (numNewConflicts > 0) {
-            ButtonSpec[] options = new ButtonSpec[] {
-                    new ButtonSpec(
-                            tr("OK"),
-                            ImageProvider.get("ok"),
-                            tr("Click to close this dialog and continue editing"),
-                            null /* no specific help */
-                    )
-            };
-            HelpAwareOptionPane.showOptionDialog(
-                    Main.parent,
-                    sb.toString(),
-                    tr("Conflicts detected"),
-                    JOptionPane.WARNING_MESSAGE,
-                    null, /* no icon */
-                    options,
-                    options[0],
-                    ht("/Concepts/Conflict#WarningAboutDetectedConflicts")
-            );
-            Main.map.conflictDialog.unfurlDialog();
-            Main.map.repaint();
-        }
-    }
+    //     StringBuffer sb = new StringBuffer();
+    //     sb.append("<html>").append(msg1);
+    //     if (numPurgedPrimitives > 0) {
+    //         sb.append("<br>").append(msg2);
+    //     }
+    //     if (numRemainingConflicts > 0) {
+    //         sb.append("<br>").append(msg3);
+    //     }
+    //     sb.append("</html>");
+    //     if (numNewConflicts > 0) {
+    //         ButtonSpec[] options = new ButtonSpec[] {
+    //                 new ButtonSpec(
+    //                         tr("OK"),
+    //                         ImageProvider.get("ok"),
+    //                         tr("Click to close this dialog and continue editing"),
+    //                         null /* no specific help */
+    //                 )
+    //         };
+    //         HelpAwareOptionPane.showOptionDialog(
+    //                 Main.parent,
+    //                 sb.toString(),
+    //                 tr("Conflicts detected"),
+    //                 JOptionPane.WARNING_MESSAGE,
+    //                 null, /* no icon */
+    //                 options,
+    //                 options[0],
+    //                 ht("/Concepts/Conflict#WarningAboutDetectedConflicts")
+    //         );
+    //         Main.map.conflictDialog.unfurlDialog();
+    //         Main.map.repaint();
+    //     }
+    // }
 
     /**
      * Builds the purge command for primitives which can be purged automatically
@@ -450,9 +451,10 @@ public class OsmDataLayer extends Layer
     //     return cmd;
     // }
 
-    // @Override public boolean isMergable(final Layer other) {
-    //     return other instanceof OsmDataLayer;
-    // }
+     // @Override public boolean isMergable(final Layer other) {
+    // //     return other instanceof OsmDataLayer;
+    //      return false;
+    //  }
 
     // @Override public void visitBoundingBox(final BoundingXYVisitor v) {
     //     for (final Node n: data.getNodes()) {
@@ -470,91 +472,86 @@ public class OsmDataLayer extends Layer
      * @param processed A list of all objects that were actually uploaded.
      *         May be <code>null</code>, which means nothing has been uploaded
      */
-    public void cleanupAfterUpload(final Collection<OsmPrimitive> processed) {
-        // return immediately if an upload attempt failed
-        if (processed == null || processed.isEmpty())
-            return;
+    // public void cleanupAfterUpload(final Collection<OsmPrimitive> processed) {
+    //     // return immediately if an upload attempt failed
+    //     if (processed == null || processed.isEmpty())
+    //         return;
 
-        Main.main.undoRedo.clean(this);
+    //     //Main.main.undoRedo.clean(this);
 
-        // if uploaded, clean the modified flags as well
-        data.clenupDeletedPrimitives();
-        for (OsmPrimitive p: data.allPrimitives()) {
-            if (processed.contains(p)) {
-                p.setModified(false);
-            }
-        }
-    }
+    //     // if uploaded, clean the modified flags as well
+    //     data.clenupDeletedPrimitives();
+    //     for (OsmPrimitive p: data.allPrimitives()) {
+    //         if (processed.contains(p)) {
+    //             p.setModified(false);
+    //         }
+    //     }
+    // }
 
 
-    @Override public Object getInfoComponent() {
-        final DataCountVisitor counter = new DataCountVisitor();
-        for (final OsmPrimitive osm : data.allPrimitives()) {
-            osm.visit(counter);
-        }
-        final JPanel p = new JPanel(new GridBagLayout());
+    // @Override public Object getInfoComponent() {
+    //     final DataCountVisitor counter = new DataCountVisitor();
+    //     for (final OsmPrimitive osm : data.allPrimitives()) {
+    //         osm.visit(counter);
+    //     }
+    //     final JPanel p = new JPanel(new GridBagLayout());
+    //     String nodeText = trn("{0} node", "{0} nodes", counter.nodes, counter.nodes);
+    //     if (counter.deletedNodes > 0) {
+    //         nodeText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedNodes, counter.deletedNodes)+")";
+    //     }
+    //     String wayText = trn("{0} way", "{0} ways", counter.ways, counter.ways);
+    //     if (counter.deletedWays > 0) {
+    //         wayText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedWays, counter.deletedWays)+")";
+    //     }
+    //     String relationText = trn("{0} relation", "{0} relations", counter.relations, counter.relations);
+    //     if (counter.deletedRelations > 0) {
+    //         relationText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedRelations, counter.deletedRelations)+")";
+    //     }
+    //     p.add(new JLabel(tr("{0} consists of:", getName())), GBC.eol());
+    //     p.add(new JLabel(nodeText, ImageProvider.get("data", "node"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
+    //     p.add(new JLabel(wayText, ImageProvider.get("data", "way"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
+    //     p.add(new JLabel(relationText, ImageProvider.get("data", "relation"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
+    //     p.add(new JLabel(tr("API version: {0}", (data.getVersion() != null) ? data.getVersion() : tr("unset"))));
+    //     return p;
+    // }
 
-        String nodeText = trn("{0} node", "{0} nodes", counter.nodes, counter.nodes);
-        if (counter.deletedNodes > 0) {
-            nodeText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedNodes, counter.deletedNodes)+")";
-        }
+    // @Override public Component[] getMenuEntries() {
+    //     if (Main.applet)
+    //         return new Component[]{
+    //             new JMenuItem(LayerListDialog.getInstance().createActivateLayerAction(this)),
+    //             new JMenuItem(LayerListDialog.getInstance().createShowHideLayerAction(this)),
+    //             new JMenuItem(LayerListDialog.getInstance().createDeleteLayerAction(this)),
+    //             new JSeparator(),
+    //             new JMenuItem(LayerListDialog.getInstance().createMergeLayerAction(this)),
+    //             new JSeparator(),
+    //             new JMenuItem(new RenameLayerAction(getAssociatedFile(), this)),
+    //             new JMenuItem(new ConsistencyTestAction()),
+    //             new JSeparator(),
+    //             new JMenuItem(new LayerListPopup.InfoAction(this))};
+    //     return new Component[]{
+    //             new JMenuItem(LayerListDialog.getInstance().createActivateLayerAction(this)),
+    //             new JMenuItem(LayerListDialog.getInstance().createShowHideLayerAction(this)),
+    //             new JMenuItem(LayerListDialog.getInstance().createDeleteLayerAction(this)),
+    //             new JSeparator(),
+    //             new JMenuItem(LayerListDialog.getInstance().createMergeLayerAction(this)),
+    //             new JMenuItem(new LayerSaveAction(this)),
+    //             new JMenuItem(new LayerSaveAsAction(this)),
+    //             new JMenuItem(new LayerGpxExportAction(this)),
+    //             new JMenuItem(new ConvertToGpxLayerAction()),
+    //             new JSeparator(),
+    //             new JMenuItem(new RenameLayerAction(getAssociatedFile(), this)),
+    //             new JMenuItem(new ConsistencyTestAction()),
+    //             new JSeparator(),
+    //             new JMenuItem(new LayerListPopup.InfoAction(this))};
+    // }
 
-        String wayText = trn("{0} way", "{0} ways", counter.ways, counter.ways);
-        if (counter.deletedWays > 0) {
-            wayText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedWays, counter.deletedWays)+")";
-        }
-
-        String relationText = trn("{0} relation", "{0} relations", counter.relations, counter.relations);
-        if (counter.deletedRelations > 0) {
-            relationText += " ("+trn("{0} deleted", "{0} deleted", counter.deletedRelations, counter.deletedRelations)+")";
-        }
-
-        p.add(new JLabel(tr("{0} consists of:", getName())), GBC.eol());
-        p.add(new JLabel(nodeText, ImageProvider.get("data", "node"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
-        p.add(new JLabel(wayText, ImageProvider.get("data", "way"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
-        p.add(new JLabel(relationText, ImageProvider.get("data", "relation"), JLabel.HORIZONTAL), GBC.eop().insets(15,0,0,0));
-        p.add(new JLabel(tr("API version: {0}", (data.getVersion() != null) ? data.getVersion() : tr("unset"))));
-
-        return p;
-    }
-
-    @Override public Component[] getMenuEntries() {
-        if (Main.applet)
-            return new Component[]{
-                new JMenuItem(LayerListDialog.getInstance().createActivateLayerAction(this)),
-                new JMenuItem(LayerListDialog.getInstance().createShowHideLayerAction(this)),
-                new JMenuItem(LayerListDialog.getInstance().createDeleteLayerAction(this)),
-                new JSeparator(),
-                new JMenuItem(LayerListDialog.getInstance().createMergeLayerAction(this)),
-                new JSeparator(),
-                new JMenuItem(new RenameLayerAction(getAssociatedFile(), this)),
-                new JMenuItem(new ConsistencyTestAction()),
-                new JSeparator(),
-                new JMenuItem(new LayerListPopup.InfoAction(this))};
-        return new Component[]{
-                new JMenuItem(LayerListDialog.getInstance().createActivateLayerAction(this)),
-                new JMenuItem(LayerListDialog.getInstance().createShowHideLayerAction(this)),
-                new JMenuItem(LayerListDialog.getInstance().createDeleteLayerAction(this)),
-                new JSeparator(),
-                new JMenuItem(LayerListDialog.getInstance().createMergeLayerAction(this)),
-                new JMenuItem(new LayerSaveAction(this)),
-                new JMenuItem(new LayerSaveAsAction(this)),
-                new JMenuItem(new LayerGpxExportAction(this)),
-                new JMenuItem(new ConvertToGpxLayerAction()),
-                new JSeparator(),
-                new JMenuItem(new RenameLayerAction(getAssociatedFile(), this)),
-                new JMenuItem(new ConsistencyTestAction()),
-                new JSeparator(),
-                new JMenuItem(new LayerListPopup.InfoAction(this))};
-    }
-
-    public void fireDataChange() {
-        setRequiresSaveToFile(true);
-        setRequiresUploadToServer(true);
-        for (DataChangeListener dcl : listenerDataChanged) {
-            dcl.dataChanged(this);
-        }
-    }
+    // public void fireDataChange() {
+    //     setRequiresSaveToFile(true);
+    //     setRequiresUploadToServer(true);
+    //     for (DataChangeListener dcl : listenerDataChanged) {
+    //         dcl.dataChanged(this);
+    //     }
+    // }
 
     // public static GpxData toGpxData(DataSet data, File file) {
     //     GpxData gpxData = new GpxData();
@@ -631,17 +628,17 @@ public class OsmDataLayer extends Layer
     public boolean containsPoint(LatLon coor) {
         // we'll assume that if this has no data sources
         // that it also has no borders
-        if (this.data.dataSources.isEmpty())
-            return true;
+        //if (this.data.dataSources.isEmpty())
+        return true;
 
-        boolean layer_bounds_point = false;
-        for (DataSource src : this.data.dataSources) {
-            if (src.bounds.contains(coor)) {
-                layer_bounds_point = true;
-                break;
-            }
-        }
-        return layer_bounds_point;
+        // boolean layer_bounds_point = false;
+        // for (DataSource src : this.data.dataSources) {
+        //     if (src.bounds.contains(coor)) {
+        //         layer_bounds_point = true;
+        //         break;
+        //     }
+        // }
+        // return layer_bounds_point;
     }
 
     /**
@@ -684,17 +681,18 @@ public class OsmDataLayer extends Layer
      */
     public void onPostLoadFromFile() {
         setRequiresSaveToFile(false);
-        setRequiresUploadToServer(data.isModified());
+        //setRequiresUploadToServer(data.isModified());
     }
 
     public void onPostDownloadFromServer() {
         setRequiresSaveToFile(true);
-        setRequiresUploadToServer(data.isModified());
+        //setRequiresUploadToServer(data.isModified());
     }
 
     @Override
     public boolean isChanged() {
-        return isChanged || highlightUpdateCount != data.getHighlightUpdateCount();
+        //return isChanged || highlightUpdateCount != data.getHighlightUpdateCount();
+        return false;
     }
 
     /**
@@ -703,7 +701,7 @@ public class OsmDataLayer extends Layer
      */
     public void onPostSaveToFile() {
         setRequiresSaveToFile(false);
-        setRequiresUploadToServer(data.isModified());
+        ///setRequiresUploadToServer(data.isModified());
     }
 
     /**
@@ -711,39 +709,39 @@ public class OsmDataLayer extends Layer
      *
      */
     public void onPostUploadToServer() {
-        setRequiresUploadToServer(data.isModified());
+        //setRequiresUploadToServer(data.isModified());
         // keep requiresSaveToDisk unchanged
     }
 
-    private class ConsistencyTestAction extends AbstractAction {
+    // private class ConsistencyTestAction extends AbstractAction {
 
-        public ConsistencyTestAction() {
-            super(tr("Dataset consistency test"));
-        }
+    //     public ConsistencyTestAction() {
+    //         super(tr("Dataset consistency test"));
+    //     }
 
-        public void actionPerformed(ActionEvent e) {
-            String result = DatasetConsistencyTest.runTests(data);
-            if (result.length() == 0) {
-                JOptionPane.showMessageDialog(Main.parent, tr("No problems found"));
-            } else {
-                JPanel p = new JPanel(new GridBagLayout());
-                p.add(new JLabel(tr("Following problems found:")), GBC.eol());
-                JTextArea info = new JTextArea(result, 20, 60);
-                info.setCaretPosition(0);
-                info.setEditable(false);
-                p.add(new JScrollPane(info), GBC.eop());
+    //     public void actionPerformed(ActionEvent e) {
+    //         String result = DatasetConsistencyTest.runTests(data);
+    //         if (result.length() == 0) {
+    //             JOptionPane.showMessageDialog(Main.parent, tr("No problems found"));
+    //         } else {
+    //             JPanel p = new JPanel(new GridBagLayout());
+    //             p.add(new JLabel(tr("Following problems found:")), GBC.eol());
+    //             JTextArea info = new JTextArea(result, 20, 60);
+    //             info.setCaretPosition(0);
+    //             info.setEditable(false);
+    //             p.add(new JScrollPane(info), GBC.eop());
 
-                JOptionPane.showMessageDialog(Main.parent, p, tr("Warning"), JOptionPane.WARNING_MESSAGE);
-            }
-        }
+    //             JOptionPane.showMessageDialog(Main.parent, p, tr("Warning"), JOptionPane.WARNING_MESSAGE);
+    //         }
+    //     }
 
-    }
+    // }
 
-    public void processDatasetEvent(AbstractDatasetChangedEvent event) {
-        isChanged = true;
-    }
+    // public void processDatasetEvent(AbstractDatasetChangedEvent event) {
+    //     isChanged = true;
+    // }
 
-    public void selectionChanged(Collection<? extends OsmPrimitive> newSelection) {
-        isChanged = true;
-    }
+    // public void selectionChanged(Collection<? extends OsmPrimitive> newSelection) {
+    //     isChanged = true;
+    // }
 }

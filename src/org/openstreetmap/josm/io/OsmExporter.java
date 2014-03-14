@@ -25,19 +25,19 @@ import org.openstreetmap.josm.gui.layer.OsmDataLayer;
 public class OsmExporter {
 
     public OsmExporter() {
-        super(new ExtensionFileFilter("osm,xml", "osm", tr("OSM Server Files") + " (*.osm *.xml)"));
+        //super(new ExtensionFileFilter("osm,xml", "osm", tr("OSM Server Files") + " (*.osm *.xml)"));
     }
 
     //public OsmExporter(ExtensionFileFilter filter) {
     //        super(filter);
     // }
 
-    //@Override
-    public boolean acceptFile(File pathname, Layer layer) {
-        if (!(layer instanceof OsmDataLayer))
-            return false;
-        return super.acceptFile(pathname, layer);
-    }
+    // //@Override
+    // public boolean acceptFile(File pathname, Layer layer) {
+    //     if (!(layer instanceof OsmDataLayer))
+    //         return false;
+    //     //return super.acceptFile(pathname, layer);
+    // }
 
     //@Override
     public void exportData(File file, Layer layer) throws IOException {
@@ -74,48 +74,44 @@ public class OsmExporter {
             w.footer();
             w.close();
             // FIXME - how to close?
-            if (!Main.pref.getBoolean("save.keepbackup") && (tmpFile != null)) {
-                tmpFile.delete();
-            }
+            //if (!Main.pref.getBoolean("save.keepbackup") && (tmpFile != null)) {
+            //tmpFile.delete();
+            //}
             layer.onPostSaveToFile();
         } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                    Main.parent,
-                    tr("<html>An error occurred while saving.<br>Error is:<br>{0}</html>", e.getMessage()),
-                    tr("Error"),
-                    JOptionPane.ERROR_MESSAGE
-            );
+            // e.printStackTrace();
+            // JOptionPane.showMessageDialog(
+            //         Main.parent,
+            //         tr("<html>An error occurred while saving.<br>Error is:<br>{0}</html>", e.getMessage()),
+            //         tr("Error"),
+            //         JOptionPane.ERROR_MESSAGE
+            // );
 
-            try {
-                // if the file save failed, then the tempfile will not
-                // be deleted.  So, restore the backup if we made one.
-                if (tmpFile != null && tmpFile.exists()) {
-                    copy(tmpFile, file);
-                }
-            } catch (IOException e2) {
-                e2.printStackTrace();
-                JOptionPane.showMessageDialog(
-                        Main.parent,
-                        tr("<html>An error occurred while restoring backup file.<br>Error is:<br>{0}</html>", e2.getMessage()),
-                        tr("Error"),
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
+            // try {
+            //     // if the file save failed, then the tempfile will not
+            //     // be deleted.  So, restore the backup if we made one.
+            //     if (tmpFile != null && tmpFile.exists()) {
+            //         copy(tmpFile, file);
+            //     }
+            // } catch (IOException e2) {
+            //     e2.printStackTrace();
+            //     JOptionPane.showMessageDialog(
+            //             Main.parent,
+            //             tr("<html>An error occurred while restoring backup file.<br>Error is:<br>{0}</html>", e2.getMessage()),
+            //             tr("Error"),
+            //             JOptionPane.ERROR_MESSAGE
+            //     );
+            // }
         }
     }
 
     private void copy(File src, File dst) throws IOException {
         FileInputStream srcStream;
         FileOutputStream dstStream;
-        try {
-            srcStream = new FileInputStream(src);
-            dstStream = new FileOutputStream(dst);
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(Main.parent, tr("Could not back up file. Exception is: {0}", e
-                    .getMessage()), tr("Error"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+
+        srcStream = new FileInputStream(src);
+        dstStream = new FileOutputStream(dst);
+
         byte buf[] = new byte[1 << 16];
         int len;
         while ((len = srcStream.read(buf)) != -1) {
